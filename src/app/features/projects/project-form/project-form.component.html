@@ -5,14 +5,18 @@
   </div>
 
   <div class="form-card">
-    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+    <div class="loading" *ngIf="isLoading && isEditMode">
+      <p>Carregando dados do projeto...</p>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading || !isEditMode">
       <div class="form-group">
-        <label for="name">Nome do Projeto *</label>
+        <label for="name">Nome do Projeto {{ !isEditMode ? '*' : '' }}</label>
         <input
           type="text"
           id="name"
           formControlName="name"
-          placeholder="Digite o nome do projeto"
+          [placeholder]="isEditMode && currentProject ? currentProject.name : 'Digite o nome do projeto'"
           [class.error]="name?.invalid && name?.touched"
         />
         <span class="error-message" *ngIf="name?.invalid && name?.touched">
@@ -26,7 +30,7 @@
         <textarea
           id="description"
           formControlName="description"
-          placeholder="Descreva o projeto (opcional)"
+          [placeholder]="isEditMode && currentProject ? currentProject.description : 'Descreva o projeto (opcional)'"
           rows="4"
         ></textarea>
       </div>
@@ -68,7 +72,7 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="startDate">Data de Início *</label>
+          <label for="startDate">Data de Início {{ !isEditMode ? '*' : '' }}</label>
           <input
             type="date"
             id="startDate"
@@ -78,10 +82,13 @@
           <span class="error-message" *ngIf="startDate?.invalid && startDate?.touched">
             <span *ngIf="startDate?.errors?.['required']">Data de início é obrigatória</span>
           </span>
+          <small class="current-value" *ngIf="isEditMode && currentProject">
+            Valor atual: {{ currentProject.startDate | date: 'dd/MM/yyyy' }}
+          </small>
         </div>
 
         <div class="form-group">
-          <label for="endDate">Data de Término *</label>
+          <label for="endDate">Data de Término {{ !isEditMode ? '*' : '' }}</label>
           <input
             type="date"
             id="endDate"
@@ -91,6 +98,9 @@
           <span class="error-message" *ngIf="endDate?.invalid && endDate?.touched">
             <span *ngIf="endDate?.errors?.['required']">Data de término é obrigatória</span>
           </span>
+          <small class="current-value" *ngIf="isEditMode && currentProject">
+            Valor atual: {{ currentProject.endDate | date: 'dd/MM/yyyy' }}
+          </small>
         </div>
       </div>
 

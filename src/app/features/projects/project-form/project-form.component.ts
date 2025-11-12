@@ -31,13 +31,14 @@ export class ProjectFormComponent implements OnInit {
   isLoading = false;
   isEditMode = false;
   projectId: string | null = null;
+  currentProject: any = null; // Dados do projeto sendo editado
 
   constructor() {
     this.projectForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: [''],
       description: [''],
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]],
+      startDate: [''],
+      endDate: [''],
       ownerId: [''],
       ownerEmail: ['']
     });
@@ -47,6 +48,15 @@ export class ProjectFormComponent implements OnInit {
     this.projectId = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.projectId;
 
+    // Se for modo de edição, carregar dados do projeto
+    if (this.isEditMode && this.projectId) {
+      this.loadProject(this.projectId);
+    } else {
+      // Se for criação, definir validações obrigatórias
+      this.setCreateValidators();
+    }
+
+    // Carregar emails para autocomplete
     this.userService.getAllEmails().subscribe({
       next: (emails) => {
         this.allEmails = emails;
@@ -66,6 +76,36 @@ export class ProjectFormComponent implements OnInit {
     });
   }
 
+  private setCreateValidators(): void {
+    this.projectForm.get('name')?.setValidators([Validators.required, Validators.minLength(3)]);
+    this.projectForm.get('startDate')?.setValidators([Validators.required]);
+    this.projectForm.get('endDate')?.setValidators([Validators.required]);
+    this.projectForm.updateValueAndValidity();
+  }
+
+  private loadProject(id: string): void {
+    this.isLoading = true;
+    this.projectService.getById(id).subscribe({
+      next: (project) => {
+        this.currentProject = project;
+        this.projectForm.patchValue({
+          name: project.name,
+          description: project.description,
+          startDate: project.startDate,
+          endDate: project.endDate,
+          ownerId: project.owner.id,
+          ownerEmail: project.owner.email
+        });
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar projeto:', error);
+        this.errorMessage = 'Erro ao carregar dados do projeto.';
+        this.isLoading = false;
+      }
+    });
+  }
+
   private filterEmails(searchTerm: string): void {
     const term = searchTerm.toLowerCase();
     this.emailSuggestions = this.allEmails
@@ -78,14 +118,29 @@ export class ProjectFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.projectForm.valid) {
+    if (this.projectForm.valid || this.isEditMode) {
       this.isLoading = true;
       this.errorMessage = '';
 
-      const projectData = {
-        ...this.projectForm.value,
-        ownerId: this.projectForm.get('ownerId')?.value
-      };
+      let projectData: any;
+
+      if (this.isEditMode) {
+        // No modo de edição, envia apenas campos não vazios
+        projectData = {};
+        const formValue = this.projectForm.value;
+        
+        if (formValue.name) projectData.name = formValue.name;
+        if (formValue.description) projectData.description = formValue.description;
+        if (formValue.startDate) projectData.startDate = formValue.startDate;
+        if (formValue.endDate) projectData.endDate = formValue.endDate;
+        if (formValue.ownerEmail) projectData.ownerEmail = formValue.ownerEmail;
+      } else {
+        // No modo de criação, envia todos os campos
+        projectData = {
+          ...this.projectForm.value,
+          ownerId: this.authService.getUserId() // Usa o ID do usuário logado
+        };
+      }
 
       const request = this.isEditMode && this.projectId
         ? this.projectService.update(this.projectId, projectData)

@@ -24,7 +24,11 @@ export class ProjectService {
     if (!ownerId) {
       throw new Error('Owner ID is required');
     }
-    return this.http.get<Project[]>(`${this.apiUrl}/${ownerId}`);
+    return this.http.get<Project[]>(`${this.apiUrl}/owner/${ownerId}`);
+  }
+
+  getById(id: string): Observable<Project> {
+    return this.http.get<Project>(`${this.apiUrl}/${id}`);
   }
 
   create(project: ProjectRequest): Observable<Project> {
