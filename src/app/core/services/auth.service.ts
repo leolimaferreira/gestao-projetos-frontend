@@ -13,8 +13,9 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly apiUrl = `${environment.apiUrl}/auth`;
   
-  private readonly TOKEN_KEY = 'token';
-  private readonly USER_NAME_KEY = 'userName';
+  private readonly TOKEN_KEY = 'auth_token';
+  private readonly USER_NAME_KEY = 'user_name';
+  private readonly TOKEN_EXPIRY_KEY = 'token_expiry';
   
   isAuthenticated = signal<boolean>(this.hasToken());
 
@@ -23,6 +24,7 @@ export class AuthService {
       tap(response => {
         this.setToken(response.token);
         this.setUserName(response.name);
+        this.setTokenExpiry();
         this.isAuthenticated.set(true);
       })
     );
@@ -39,32 +41,91 @@ export class AuthService {
   logout(): void {
     this.removeToken();
     this.removeUserName();
+    this.removeTokenExpiry();
     this.isAuthenticated.set(false);
     this.router.navigate(['/login']);
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    if (this.isTokenExpired()) {
+      this.logout();
+      return null;
+    }
+    return sessionStorage.getItem(this.TOKEN_KEY) || localStorage.getItem(this.TOKEN_KEY);
   }
 
   getUserName(): string | null {
-    return localStorage.getItem(this.USER_NAME_KEY);
+    return sessionStorage.getItem(this.USER_NAME_KEY) || localStorage.getItem(this.USER_NAME_KEY);
   }
 
-  private setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+  getUserId(): string {
+    const token = this.getToken();
+    if (!token) return '';
+
+    try {
+      const payload = this.decodeToken(token);
+      return payload.sub || null;
+    } catch (error) {
+      console.error('Erro ao decodificar token:', error);
+      return '';
+    }
+  }
+
+  private decodeToken(token: string): any {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      throw new Error('Token inválido');
+    }
+  }
+
+  private setToken(token: string, rememberMe: boolean = false): void {
+    if (rememberMe) {
+      localStorage.setItem(this.TOKEN_KEY, token);
+    } else {
+      sessionStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
 
   private setUserName(name: string): void {
+    sessionStorage.setItem(this.USER_NAME_KEY, name);
     localStorage.setItem(this.USER_NAME_KEY, name);
   }
 
+  private setTokenExpiry(): void {
+    const expiryTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+    sessionStorage.setItem(this.TOKEN_EXPIRY_KEY, expiryTime.toString());
+    localStorage.setItem(this.TOKEN_EXPIRY_KEY, expiryTime.toString());
+  }
+
+  private isTokenExpired(): boolean {
+    const expiry = sessionStorage.getItem(this.TOKEN_EXPIRY_KEY) || localStorage.getItem(this.TOKEN_EXPIRY_KEY);
+    if (!expiry) return false;
+    
+    return new Date().getTime() > parseInt(expiry);
+  }
+
   private removeToken(): void {
+    sessionStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.TOKEN_KEY);
   }
 
   private removeUserName(): void {
+    sessionStorage.removeItem(this.USER_NAME_KEY);
     localStorage.removeItem(this.USER_NAME_KEY);
+  }
+
+  private removeTokenExpiry(): void {
+    sessionStorage.removeItem(this.TOKEN_EXPIRY_KEY);
+    localStorage.removeItem(this.TOKEN_EXPIRY_KEY);
   }
 
   private hasToken(): boolean {

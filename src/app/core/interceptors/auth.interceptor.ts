@@ -1,20 +1,41 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
+  const router = inject(Router);
   const token = authService.getToken();
 
-  // Não adiciona token para rotas de autenticação
-  if (token && !req.url.includes('/auth/login') && !req.url.includes('/users')) {
-    const cloned = req.clone({
+  const publicRoutes = [
+    '/auth/login',
+    '/auth/generate-recovery-token',
+    '/auth/change-password',
+    '/users'
+  ];
+
+  const isPublicRoute = publicRoutes.some(route => req.url.includes(route) && req.method === 'POST');
+
+  if (token && !isPublicRoute) {
+    req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: token
       }
     });
-    return next(cloned);
   }
 
-  return next(req);
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401 || error.status === 403) {
+        authService.logout();
+        router.navigate(['/login'], {
+          queryParams: { returnUrl: router.url, sessionExpired: 'true' }
+        });
+      }
+      return throwError(() => error);
+    })
+  );
 };

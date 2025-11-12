@@ -30,10 +30,9 @@ export class DashboardComponent implements OnInit {
   loadDashboardData(): void {
     this.isLoading = true;
 
-    // Carregar totais
-    this.projectService.getAll(0, 1).subscribe({
-      next: (page) => {
-        this.totalProjects = page.totalElements;
+    this.projectService.getByOwnerId(this.authService.getUserId()).subscribe({
+      next: (projects) => {
+        this.totalProjects = projects.length;
       }
     });
 

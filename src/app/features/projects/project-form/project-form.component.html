@@ -31,6 +31,41 @@
         ></textarea>
       </div>
 
+      <div class="toggle-container">
+        <label class="toggle-label">
+          <span>Adicionar email do proprietário</span>
+          <div class="toggle-switch" (click)="toggleOwnerEmailField(); $event.preventDefault()">
+            <input type="checkbox" [checked]="showOwnerEmailField" readonly />
+            <span class="slider"></span>
+          </div>
+        </label>
+      </div>
+
+      <div class="form-group" *ngIf="showOwnerEmailField">
+        <label for="ownerEmail">Email do Proprietário</label>
+        <div class="autocomplete-wrapper">
+          <input
+            type="email"
+            id="ownerEmail"
+            formControlName="ownerEmail"
+            placeholder="Digite o email do proprietário do projeto"
+            (blur)="onEmailInputBlur()"
+            autocomplete="off"
+          />
+          <div class="suggestions-list" *ngIf="showSuggestions && emailSuggestions.length > 0">
+            <div 
+              class="suggestion-item" 
+              *ngFor="let email of emailSuggestions"
+              (click)="selectEmail(email)"
+            >
+              <div class="user-info">
+                <span class="user-email">{{ email }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <label for="startDate">Data de Início *</label>

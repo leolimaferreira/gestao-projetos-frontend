@@ -49,20 +49,5 @@
       <p>Nenhum projeto encontrado.</p>
       <button class="btn-primary" routerLink="/projects/new">Criar Primeiro Projeto</button>
     </div>
-
-    <!-- Paginação -->
-    <div class="pagination" *ngIf="page && page.totalPages > 1">
-      <button class="btn-page" (click)="previousPage()" [disabled]="page.first">
-        ← Anterior
-      </button>
-      
-      <span class="page-info">
-        Página {{ page.number + 1 }} de {{ page.totalPages }}
-      </span>
-      
-      <button class="btn-page" (click)="nextPage()" [disabled]="page.last">
-        Próxima →
-      </button>
-    </div>
   </div>
 </div>

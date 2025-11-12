@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://gestaoprojetosfatec.azurewebsites.net'
+  apiUrl: 'http://localhost:8080'
 };

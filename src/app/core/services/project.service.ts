@@ -20,6 +20,13 @@ export class ProjectService {
     return this.http.get<Page<Project>>(this.apiUrl, { params });
   }
 
+  getByOwnerId(ownerId: string | null): Observable<Project[]> {
+    if (!ownerId) {
+      throw new Error('Owner ID is required');
+    }
+    return this.http.get<Project[]>(`${this.apiUrl}/${ownerId}`);
+  }
+
   create(project: ProjectRequest): Observable<Project> {
     return this.http.post<Project>(this.apiUrl, project);
   }

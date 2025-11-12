@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectService } from '../../../core/services/project.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-project-form',
@@ -13,9 +14,15 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './project-form.component.css'
 })
 export class ProjectFormComponent implements OnInit {
+  public showOwnerEmailField = false;
+  public emailSuggestions: string[] = [];
+  public showSuggestions = false;
+  public allEmails: string[] = [];
+  
   private readonly fb = inject(FormBuilder);
   private readonly projectService = inject(ProjectService);
   private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
@@ -31,7 +38,8 @@ export class ProjectFormComponent implements OnInit {
       description: [''],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
-      ownerId: ['']
+      ownerId: [''],
+      ownerEmail: ['']
     });
   }
 
@@ -39,8 +47,34 @@ export class ProjectFormComponent implements OnInit {
     this.projectId = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.projectId;
 
-    // Por enquanto, usar um ID fixo para o owner (substituir com usuário logado)
-    // TODO: Implementar sistema para obter ID do usuário logado
+    this.userService.getAllEmails().subscribe({
+      next: (emails) => {
+        this.allEmails = emails;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar emails:', error);
+      }
+    });
+
+    this.projectForm.get('ownerEmail')?.valueChanges.subscribe(email => {
+      if (email && email.length >= 2) {
+        this.filterEmails(email);
+      } else {
+        this.emailSuggestions = [];
+        this.showSuggestions = false;
+      }
+    });
+  }
+
+  private filterEmails(searchTerm: string): void {
+    const term = searchTerm.toLowerCase();
+    this.emailSuggestions = this.allEmails
+      .filter(email =>
+        email.toLowerCase().includes(term)
+      )
+      .slice(0, 10); 
+    
+    this.showSuggestions = this.emailSuggestions.length > 0;
   }
 
   onSubmit(): void {
@@ -50,7 +84,7 @@ export class ProjectFormComponent implements OnInit {
 
       const projectData = {
         ...this.projectForm.value,
-        ownerId: 'USER_ID_FIXO' // TODO: Substituir pelo ID do usuário logado
+        ownerId: this.projectForm.get('ownerId')?.value
       };
 
       const request = this.isEditMode && this.projectId
@@ -86,5 +120,23 @@ export class ProjectFormComponent implements OnInit {
 
   get endDate() {
     return this.projectForm.get('endDate');
+  }
+
+  toggleOwnerEmailField() {
+    this.showOwnerEmailField = !this.showOwnerEmailField;
+  }
+
+  selectEmail(email: string): void {
+    this.projectForm.patchValue({
+      ownerEmail: email
+    });
+    this.showSuggestions = false;
+    this.emailSuggestions = [];
+  }
+
+  onEmailInputBlur(): void {
+    setTimeout(() => {
+      this.showSuggestions = false;
+    }, 200);
   }
 }
