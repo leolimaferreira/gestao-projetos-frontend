@@ -1,0 +1,130 @@
+<div class="task-list-container">
+  <div class="header">
+    <div class="header-content">
+      <h1>Tarefas</h1>
+      <div class="header-actions">
+        <button class="btn-secondary" routerLink="/tasks/kanban">
+          📊 Visualizar Kanban
+        </button>
+        <button class="btn-primary" routerLink="/tasks/new">
+          + Nova Tarefa
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Filtros -->
+    <div class="filters-card">
+      <h3>Filtros</h3>
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label for="title">Título</label>
+          <input
+            type="text"
+            id="title"
+            [(ngModel)]="filters.title"
+            placeholder="Buscar por título"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="projectName">Projeto</label>
+          <input
+            type="text"
+            id="projectName"
+            [(ngModel)]="filters.projectName"
+            placeholder="Nome do projeto"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="status">Status</label>
+          <select id="status" [(ngModel)]="filters.status">
+            <option value="">Todos</option>
+            <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="priority">Prioridade</label>
+          <select id="priority" [(ngModel)]="filters.priority">
+            <option value="">Todas</option>
+            <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn-filter" (click)="applyFilters()">Aplicar Filtros</button>
+        <button class="btn-clear" (click)="clearFilters()">Limpar</button>
+      </div>
+    </div>
+
+    <div class="error-alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <div class="loading" *ngIf="isLoading">
+      <p>Carregando tarefas...</p>
+    </div>
+
+    <!-- Lista de Tarefas -->
+    <div class="tasks-list" *ngIf="!isLoading && tasks.length > 0">
+      <div class="task-card" *ngFor="let task of tasks">
+        <div class="task-header">
+          <div class="task-title-row">
+            <h3>{{ task.title }}</h3>
+            <div class="task-badges">
+              <span class="badge" [ngClass]="getStatusClass(task.status)">
+                {{ task.status }}
+              </span>
+              <span class="badge" [ngClass]="getPriorityClass(task.priority)">
+                {{ task.priority }}
+              </span>
+            </div>
+          </div>
+          <p class="task-project">Projeto: {{ task.project.name }}</p>
+        </div>
+
+        <p class="task-description">{{ task.description }}</p>
+
+        <div class="task-info">
+          <div class="info-item">
+            <span class="info-label">Responsável:</span>
+            <span>{{ task.assignee.name }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Prazo:</span>
+            <span>{{ task.dueDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+
+        <div class="task-actions">
+          <button class="btn-edit" [routerLink]="['/tasks/edit', task.id]">Editar</button>
+          <button class="btn-delete" (click)="deleteTask(task.id)">Excluir</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && tasks.length === 0">
+      <p>Nenhuma tarefa encontrada.</p>
+      <button class="btn-primary" routerLink="/tasks/new">Criar Nova Tarefa</button>
+    </div>
+
+    <!-- Paginação -->
+    <div class="pagination" *ngIf="page && page.totalPages > 1">
+      <button class="btn-page" (click)="previousPage()" [disabled]="page.first">
+        ← Anterior
+      </button>
+      
+      <span class="page-info">
+        Página {{ page.number + 1 }} de {{ page.totalPages }}
+      </span>
+      
+      <button class="btn-page" (click)="nextPage()" [disabled]="page.last">
+        Próxima →
+      </button>
+    </div>
+  </div>
+</div>

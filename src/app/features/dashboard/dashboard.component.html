@@ -1,0 +1,66 @@
+<div class="dashboard-container">
+  <div class="header">
+    <div class="header-content">
+      <div>
+        <h1>Dashboard</h1>
+        <p class="welcome">Bem-vindo, {{ userName }}!</p>
+      </div>
+      <button class="btn-logout" (click)="logout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="loading" *ngIf="isLoading">
+      <p>Carregando dados...</p>
+    </div>
+
+    <div class="stats-grid" *ngIf="!isLoading">
+      <div class="stat-card projects">
+        <div class="stat-icon">📁</div>
+        <div class="stat-info">
+          <h3>{{ totalProjects }}</h3>
+          <p>Projetos</p>
+        </div>
+        <a routerLink="/projects" class="stat-link">Ver todos →</a>
+      </div>
+
+      <div class="stat-card tasks">
+        <div class="stat-icon">✓</div>
+        <div class="stat-info">
+          <h3>{{ totalTasks }}</h3>
+          <p>Tarefas</p>
+        </div>
+        <a routerLink="/tasks" class="stat-link">Ver todas →</a>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <h2>Ações Rápidas</h2>
+      <div class="actions-grid">
+        <button class="action-card" routerLink="/projects/new">
+          <div class="action-icon">➕</div>
+          <h3>Novo Projeto</h3>
+          <p>Criar um novo projeto</p>
+        </button>
+
+        <button class="action-card" routerLink="/tasks/new">
+          <div class="action-icon">📝</div>
+          <h3>Nova Tarefa</h3>
+          <p>Adicionar uma tarefa</p>
+        </button>
+
+        <button class="action-card" routerLink="/tasks/kanban">
+          <div class="action-icon">📊</div>
+          <h3>Kanban</h3>
+          <p>Visualizar quadro Kanban</p>
+        </button>
+
+        <button class="action-card" routerLink="/projects">
+          <div class="action-icon">📋</div>
+          <h3>Projetos</h3>
+          <p>Gerenciar projetos</p>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

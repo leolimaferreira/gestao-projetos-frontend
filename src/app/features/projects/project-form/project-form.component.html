@@ -1,0 +1,77 @@
+<div class="form-container">
+  <div class="header">
+    <h1>{{ isEditMode ? 'Editar Projeto' : 'Novo Projeto' }}</h1>
+    <button class="btn-back" routerLink="/projects">← Voltar</button>
+  </div>
+
+  <div class="form-card">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nome do Projeto *</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Digite o nome do projeto"
+          [class.error]="name?.invalid && name?.touched"
+        />
+        <span class="error-message" *ngIf="name?.invalid && name?.touched">
+          <span *ngIf="name?.errors?.['required']">Nome é obrigatório</span>
+          <span *ngIf="name?.errors?.['minlength']">Nome deve ter no mínimo 3 caracteres</span>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Descreva o projeto (opcional)"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Data de Início *</label>
+          <input
+            type="date"
+            id="startDate"
+            formControlName="startDate"
+            [class.error]="startDate?.invalid && startDate?.touched"
+          />
+          <span class="error-message" *ngIf="startDate?.invalid && startDate?.touched">
+            <span *ngIf="startDate?.errors?.['required']">Data de início é obrigatória</span>
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">Data de Término *</label>
+          <input
+            type="date"
+            id="endDate"
+            formControlName="endDate"
+            [class.error]="endDate?.invalid && endDate?.touched"
+          />
+          <span class="error-message" *ngIf="endDate?.invalid && endDate?.touched">
+            <span *ngIf="endDate?.errors?.['required']">Data de término é obrigatória</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="error-alert" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" routerLink="/projects">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="projectForm.invalid || isLoading">
+          <span *ngIf="!isLoading">{{ isEditMode ? 'Atualizar' : 'Criar' }} Projeto</span>
+          <span *ngIf="isLoading">{{ isEditMode ? 'Atualizando' : 'Criando' }}...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

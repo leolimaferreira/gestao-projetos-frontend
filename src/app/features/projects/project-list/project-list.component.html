@@ -1,0 +1,68 @@
+<div class="project-list-container">
+  <div class="header">
+    <div class="header-content">
+      <h1>Projetos</h1>
+      <button class="btn-primary" routerLink="/projects/new">
+        <span>+ Novo Projeto</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="error-alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <div class="loading" *ngIf="isLoading">
+      <p>Carregando projetos...</p>
+    </div>
+
+    <div class="projects-grid" *ngIf="!isLoading && projects.length > 0">
+      <div class="project-card" *ngFor="let project of projects">
+        <div class="project-header">
+          <h3>{{ project.name }}</h3>
+          <span class="project-owner">Por: {{ project.owner.name }}</span>
+        </div>
+        
+        <p class="project-description">{{ project.description }}</p>
+        
+        <div class="project-dates">
+          <div class="date-item">
+            <span class="date-label">Início:</span>
+            <span>{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="date-item">
+            <span class="date-label">Término:</span>
+            <span>{{ project.endDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+
+        <div class="project-actions">
+          <button class="btn-secondary" [routerLink]="['/projects', project.id]">Ver Detalhes</button>
+          <button class="btn-edit" [routerLink]="['/projects/edit', project.id]">Editar</button>
+          <button class="btn-delete" (click)="deleteProject(project.id)">Excluir</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && projects.length === 0">
+      <p>Nenhum projeto encontrado.</p>
+      <button class="btn-primary" routerLink="/projects/new">Criar Primeiro Projeto</button>
+    </div>
+
+    <!-- Paginação -->
+    <div class="pagination" *ngIf="page && page.totalPages > 1">
+      <button class="btn-page" (click)="previousPage()" [disabled]="page.first">
+        ← Anterior
+      </button>
+      
+      <span class="page-info">
+        Página {{ page.number + 1 }} de {{ page.totalPages }}
+      </span>
+      
+      <button class="btn-page" (click)="nextPage()" [disabled]="page.last">
+        Próxima →
+      </button>
+    </div>
+  </div>
+</div>
