@@ -80,6 +80,7 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm.get('name')?.setValidators([Validators.required, Validators.minLength(3)]);
     this.projectForm.get('startDate')?.setValidators([Validators.required]);
     this.projectForm.get('endDate')?.setValidators([Validators.required]);
+    this.projectForm.get('ownerEmail')?.setValidators([Validators.required, Validators.email]);
     this.projectForm.updateValueAndValidity();
   }
 

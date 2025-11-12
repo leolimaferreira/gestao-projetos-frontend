@@ -35,7 +35,7 @@
         ></textarea>
       </div>
 
-      <div class="toggle-container">
+      <div class="toggle-container" *ngIf="isEditMode">
         <label class="toggle-label">
           <span>Adicionar email do proprietário</span>
           <div class="toggle-switch" (click)="toggleOwnerEmailField(); $event.preventDefault()">
@@ -45,8 +45,8 @@
         </label>
       </div>
 
-      <div class="form-group" *ngIf="showOwnerEmailField">
-        <label for="ownerEmail">Email do Proprietário</label>
+      <div class="form-group" *ngIf="showOwnerEmailField || !isEditMode">
+        <label for="ownerEmail">Email do Proprietário {{ !isEditMode ? '*' : '' }}</label>
         <div class="autocomplete-wrapper">
           <input
             type="email"
@@ -55,6 +55,7 @@
             placeholder="Digite o email do proprietário do projeto"
             (blur)="onEmailInputBlur()"
             autocomplete="off"
+            [class.error]="projectForm.get('ownerEmail')?.invalid && projectForm.get('ownerEmail')?.touched"
           />
           <div class="suggestions-list" *ngIf="showSuggestions && emailSuggestions.length > 0">
             <div 
@@ -68,6 +69,10 @@
             </div>
           </div>
         </div>
+        <span class="error-message" *ngIf="projectForm.get('ownerEmail')?.invalid && projectForm.get('ownerEmail')?.touched">
+          <span *ngIf="projectForm.get('ownerEmail')?.errors?.['required']">Email do proprietário é obrigatório</span>
+          <span *ngIf="projectForm.get('ownerEmail')?.errors?.['email']">Email inválido</span>
+        </span>
       </div>
 
       <div class="form-row">
