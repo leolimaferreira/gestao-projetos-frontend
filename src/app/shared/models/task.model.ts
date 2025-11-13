@@ -20,8 +20,8 @@ export interface TaskRequest {
   status: string;
   priority: string;
   dueDate: string;
-  projectId: string;
-  assigneeId: string;
+  projectName: string;
+  assigneeEmail: string;
 }
 
 export interface UpdateTask {

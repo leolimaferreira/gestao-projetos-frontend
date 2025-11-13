@@ -19,6 +19,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+}
+
+.btn-back {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-back:hover {
+  background: #5a6268;
 }
 
 .header h1 {
@@ -26,6 +43,7 @@
   font-weight: 700;
   color: #1a202c;
   margin: 0;
+  flex: 1;
 }
 
 .content {

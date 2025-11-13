@@ -56,6 +56,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/tasks/task-list/task-list.component').then(m => m.TaskListComponent),
     canActivate: [authGuard]
   },
+  {
+    path: 'tasks/new',
+    loadComponent: () => import('./features/tasks/task-form/task-form.component').then(m => m.TaskFormComponent),
+    canActivate: [authGuard]
+  },
 
   // Rota padrão
   {

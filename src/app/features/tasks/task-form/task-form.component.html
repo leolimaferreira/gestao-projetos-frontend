@@ -1,0 +1,140 @@
+<div class="task-form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Editar Tarefa' : 'Nova Tarefa' }}</h1>
+    <button class="btn-back" routerLink="/tasks">← Voltar</button>
+  </div>
+
+  <div class="error-alert" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+    <div class="form-group">
+      <label for="title">Título *</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        placeholder="Digite o título da tarefa"
+        [class.error]="title?.invalid && title?.touched"
+      />
+      <span class="error-message" *ngIf="title?.invalid && title?.touched">
+        <span *ngIf="title?.errors?.['required']">Título é obrigatório</span>
+        <span *ngIf="title?.errors?.['minlength']">Título deve ter no mínimo 3 caracteres</span>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descrição</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
+        placeholder="Descreva a tarefa..."
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="status">Status *</label>
+        <select
+          id="status"
+          formControlName="status"
+          [class.error]="status?.invalid && status?.touched"
+        >
+          <option value="" disabled>Selecione o status</option>
+          <option *ngFor="let s of statuses" [value]="s.value">
+            {{ s.label }}
+          </option>
+        </select>
+        <span class="error-message" *ngIf="status?.invalid && status?.touched">
+          Status é obrigatório
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="priority">Prioridade *</label>
+        <select
+          id="priority"
+          formControlName="priority"
+          [class.error]="priority?.invalid && priority?.touched"
+        >
+          <option value="" disabled>Selecione a prioridade</option>
+          <option *ngFor="let p of priorities" [value]="p.value">
+            {{ p.label }}
+          </option>
+        </select>
+        <span class="error-message" *ngIf="priority?.invalid && priority?.touched">
+          Prioridade é obrigatória
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="projectName">Projeto *</label>
+        <select
+          id="projectName"
+          formControlName="projectName"
+          [class.error]="projectName?.invalid && projectName?.touched"
+        >
+          <option value="" disabled>Selecione um projeto</option>
+          <option *ngFor="let project of projects" [value]="project.name">
+            {{ project.name }}
+          </option>
+        </select>
+        <span class="error-message" *ngIf="projectName?.invalid && projectName?.touched">
+          Projeto é obrigatório
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="dueDate">Data de Vencimento *</label>
+        <input
+          type="date"
+          id="dueDate"
+          formControlName="dueDate"
+          [class.error]="dueDate?.invalid && dueDate?.touched"
+        />
+        <span class="error-message" *ngIf="dueDate?.invalid && dueDate?.touched">
+          Data de vencimento é obrigatória
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group autocomplete-wrapper">
+      <label for="assigneeEmail">Email do Responsável *</label>
+      <input
+        type="email"
+        id="assigneeEmail"
+        formControlName="assigneeEmail"
+        placeholder="Digite o email do responsável"
+        [class.error]="assigneeEmail?.invalid && assigneeEmail?.touched"
+        (blur)="onEmailInputBlur()"
+        autocomplete="off"
+      />
+      <div class="suggestions" *ngIf="showSuggestions && emailSuggestions.length > 0">
+        <div
+          class="suggestion-item"
+          *ngFor="let email of emailSuggestions"
+          (mousedown)="selectEmail(email)"
+        >
+          {{ email }}
+        </div>
+      </div>
+      <span class="error-message" *ngIf="assigneeEmail?.invalid && assigneeEmail?.touched">
+        <span *ngIf="assigneeEmail?.errors?.['required']">Email é obrigatório</span>
+        <span *ngIf="assigneeEmail?.errors?.['email']">Email inválido</span>
+      </span>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" routerLink="/tasks" [disabled]="isLoading">
+        Cancelar
+      </button>
+      <button type="submit" class="btn-submit" [disabled]="isLoading">
+        {{ isLoading ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Criar Tarefa') }}
+      </button>
+    </div>
+  </form>
+</div>
