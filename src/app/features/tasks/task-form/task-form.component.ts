@@ -51,13 +51,13 @@ export class TaskFormComponent implements OnInit {
 
   constructor() {
     this.taskForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
+      title: [''],
       description: [''],
-      status: ['TODO', Validators.required],
-      priority: ['MEDIUM', Validators.required],
-      dueDate: ['', Validators.required],
-      projectName: ['', Validators.required],
-      assigneeEmail: ['', [Validators.required, Validators.email]]
+      status: ['TODO'],
+      priority: ['MEDIUM'],
+      dueDate: [''],
+      projectName: [''],
+      assigneeEmail: ['']
     });
   }
 
@@ -70,6 +70,9 @@ export class TaskFormComponent implements OnInit {
 
     if (this.isEditMode && this.taskId) {
       this.loadTask(this.taskId);
+    } else {
+      // Modo de criação - definir validações obrigatórias
+      this.setCreateValidators();
     }
 
     this.taskForm.get('assigneeEmail')?.valueChanges.subscribe(email => {
@@ -80,6 +83,16 @@ export class TaskFormComponent implements OnInit {
         this.showSuggestions = false;
       }
     });
+  }
+
+  private setCreateValidators(): void {
+    this.taskForm.get('title')?.setValidators([Validators.required, Validators.minLength(3)]);
+    this.taskForm.get('status')?.setValidators([Validators.required]);
+    this.taskForm.get('priority')?.setValidators([Validators.required]);
+    this.taskForm.get('dueDate')?.setValidators([Validators.required]);
+    this.taskForm.get('projectName')?.setValidators([Validators.required]);
+    this.taskForm.get('assigneeEmail')?.setValidators([Validators.required, Validators.email]);
+    this.taskForm.updateValueAndValidity();
   }
 
   private loadProjects(): void {
@@ -113,7 +126,25 @@ export class TaskFormComponent implements OnInit {
 
   private loadTask(id: string): void {
     this.isLoading = true;
-    this.isLoading = false;
+    this.taskService.getById(id).subscribe({
+      next: (task) => {
+        this.taskForm.patchValue({
+          title: task.title,
+          description: task.description,
+          status: task.status,
+          priority: task.priority,
+          dueDate: task.dueDate,
+          projectName: task.project.name,
+          assigneeEmail: task.assignee.email
+        });
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar tarefa:', error);
+        this.errorMessage = 'Erro ao carregar dados da tarefa.';
+        this.isLoading = false;
+      }
+    });
   }
 
   private filterEmails(searchTerm: string): void {
@@ -138,27 +169,47 @@ export class TaskFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.taskForm.valid) {
+    if (this.taskForm.valid || this.isEditMode) {
       this.isLoading = true;
       this.errorMessage = '';
 
-      const taskData = {
-        title: this.taskForm.value.title,
-        description: this.taskForm.value.description,
-        status: this.taskForm.value.status,
-        priority: this.taskForm.value.priority,
-        dueDate: this.taskForm.value.dueDate,
-        projectName: this.taskForm.value.projectName,
-        assigneeEmail: this.taskForm.value.assigneeEmail
-      };
+      let taskData: any;
 
-      this.taskService.create(taskData).subscribe({
+      if (this.isEditMode) {
+        // No modo de edição, envia apenas campos não vazios
+        taskData = {};
+        const formValue = this.taskForm.value;
+        
+        if (formValue.title) taskData.title = formValue.title;
+        if (formValue.description) taskData.description = formValue.description;
+        if (formValue.status) taskData.status = formValue.status;
+        if (formValue.priority) taskData.priority = formValue.priority;
+        if (formValue.dueDate) taskData.dueDate = formValue.dueDate;
+        if (formValue.assigneeEmail) taskData.assigneeEmail = formValue.assigneeEmail;
+      } else {
+        // No modo de criação, envia todos os campos
+        taskData = {
+          title: this.taskForm.value.title,
+          description: this.taskForm.value.description,
+          status: this.taskForm.value.status,
+          priority: this.taskForm.value.priority,
+          dueDate: this.taskForm.value.dueDate,
+          projectName: this.taskForm.value.projectName,
+          assigneeEmail: this.taskForm.value.assigneeEmail
+        };
+      }
+
+      const request = this.isEditMode && this.taskId
+        ? this.taskService.update(this.taskId, taskData)
+        : this.taskService.create(taskData);
+
+      request.subscribe({
         next: () => {
           this.router.navigate(['/tasks']);
         },
         error: (error) => {
-          console.error('Erro ao criar tarefa:', error);
-          this.errorMessage = error.error?.message || 'Erro ao criar tarefa.';
+          console.error('Erro ao salvar tarefa:', error);
+          this.errorMessage = error.error?.message || 'Erro ao salvar tarefa.';
           this.isLoading = false;
         },
         complete: () => {

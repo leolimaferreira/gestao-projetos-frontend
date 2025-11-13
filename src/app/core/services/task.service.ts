@@ -41,6 +41,10 @@ export class TaskService {
     return this.http.get<Task[]>(`${this.apiUrl}/project/${projectId}`);
   }
 
+  getById(id: string): Observable<Task> {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`);
+  }
+
   create(task: TaskRequest): Observable<Task> {
     return this.http.post<Task>(this.apiUrl, task);
   }
