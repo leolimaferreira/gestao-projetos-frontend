@@ -44,6 +44,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/projects/project-form/project-form.component').then(m => m.ProjectFormComponent),
     canActivate: [authGuard]
   },
+  {
+    path: 'projects/:id',
+    loadComponent: () => import('./features/projects/project-detail/project-detail.component').then(m => m.ProjectDetailComponent),
+    canActivate: [authGuard]
+  },
 
   // Tarefas
   {

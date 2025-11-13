@@ -1,0 +1,101 @@
+<div class="project-detail-container">
+  <div class="error-alert" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="loading" *ngIf="isLoading">
+    <p>Carregando projeto...</p>
+  </div>
+
+  <div *ngIf="!isLoading && project" class="detail-content">
+    <div class="header">
+      <button class="btn-back" routerLink="/projects">
+        ← Voltar para Projetos
+      </button>
+      <div class="header-actions">
+        <button class="btn-edit" [routerLink]="['/projects/edit', project.id]">
+          Editar
+        </button>
+        <button class="btn-delete" (click)="deleteProject()">
+          Excluir
+        </button>
+      </div>
+    </div>
+
+    <div class="project-info-card">
+      <h1>{{ project.name }}</h1>
+      
+      <div class="info-section">
+        <h3>Descrição</h3>
+        <p class="description">{{ project.description || 'Sem descrição' }}</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Responsável:</span>
+          <span class="info-value">{{ project.owner.name }}</span>
+        </div>
+        
+        <div class="info-item">
+          <span class="info-label">Email:</span>
+          <span class="info-value">{{ project.owner.email }}</span>
+        </div>
+        
+        <div class="info-item">
+          <span class="info-label">Data de Início:</span>
+          <span class="info-value">{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        
+        <div class="info-item">
+          <span class="info-label">Data de Término:</span>
+          <span class="info-value">{{ project.endDate | date: 'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarefas do Projeto -->
+    <div class="tasks-section">
+      <div class="tasks-header">
+        <h2>Tarefas do Projeto</h2>
+        <span class="tasks-count">{{ tasks.length }} tarefa(s)</span>
+      </div>
+
+      <div class="loading" *ngIf="isLoadingTasks">
+        <p>Carregando tarefas...</p>
+      </div>
+
+      <div class="tasks-list" *ngIf="!isLoadingTasks && tasks.length > 0">
+        <div class="task-card" *ngFor="let task of tasks">
+          <div class="task-header">
+            <h3>{{ task.title }}</h3>
+            <div class="task-badges">
+              <span class="badge" [ngClass]="getStatusClass(task.status)">
+                {{ getStatusLabel(task.status) }}
+              </span>
+              <span class="badge" [ngClass]="getPriorityClass(task.priority)">
+                {{ getPriorityLabel(task.priority) }}
+              </span>
+            </div>
+          </div>
+
+          <p class="task-description">{{ task.description }}</p>
+
+          <div class="task-info">
+            <div class="task-info-item">
+              <span class="task-info-label">Responsável:</span>
+              <span>{{ task.assignee.name }}</span>
+            </div>
+            <div class="task-info-item">
+              <span class="task-info-label">Prazo:</span>
+              <span>{{ task.dueDate | date: 'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="!isLoadingTasks && tasks.length === 0">
+        <p>Nenhuma tarefa cadastrada para este projeto.</p>
+      </div>
+    </div>
+  </div>
+</div>
