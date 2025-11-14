@@ -29,11 +29,13 @@ export class TaskFormComponent implements OnInit {
   isLoading = false;
   isEditMode = false;
   taskId: string | null = null;
+  currentTask: any = null; // Dados da tarefa sendo editada
 
   projects: Project[] = [];
   emailSuggestions: string[] = [];
   allEmails: string[] = [];
   showSuggestions = false;
+  showAssigneeEmailField = false; // Controla exibição do campo de email no modo edição
 
   statuses = [
     { value: 'TODO', label: 'A Fazer' },
@@ -125,6 +127,7 @@ export class TaskFormComponent implements OnInit {
     this.isLoading = true;
     this.taskService.getById(id).subscribe({
       next: (task) => {
+        this.currentTask = task;
         this.taskForm.patchValue({
           title: task.title,
           description: task.description,
@@ -176,12 +179,18 @@ export class TaskFormComponent implements OnInit {
         taskData = {};
         const formValue = this.taskForm.value;
         
-        if (formValue.title) taskData.title = formValue.title;
-        if (formValue.description) taskData.description = formValue.description;
+        if (formValue.title && formValue.title.trim()) taskData.title = formValue.title;
+        if (formValue.description && formValue.description.trim()) taskData.description = formValue.description;
         if (formValue.status) taskData.status = formValue.status;
         if (formValue.priority) taskData.priority = formValue.priority;
-        if (formValue.dueDate) taskData.dueDate = formValue.dueDate;
-        if (formValue.assigneeEmail) taskData.assigneeEmail = formValue.assigneeEmail;
+        
+        if (formValue.dueDate && formValue.dueDate !== '') {
+          taskData.dueDate = formValue.dueDate;
+        }
+        
+        if (this.showAssigneeEmailField && formValue.assigneeEmail) {
+          taskData.assigneeEmail = formValue.assigneeEmail;
+        }
       } else {
         taskData = {
           title: this.taskForm.value.title,
@@ -249,5 +258,9 @@ export class TaskFormComponent implements OnInit {
 
   get assigneeEmail() {
     return this.taskForm.get('assigneeEmail');
+  }
+
+  toggleAssigneeEmailField(): void {
+    this.showAssigneeEmailField = !this.showAssigneeEmailField;
   }
 }

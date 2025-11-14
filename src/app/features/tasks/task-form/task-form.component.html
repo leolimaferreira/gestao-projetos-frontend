@@ -102,13 +102,26 @@
       </div>
     </div>
 
-    <div class="form-group autocomplete-wrapper">
-      <label for="assigneeEmail">Email do Responsável *</label>
+    <div class="toggle-container" *ngIf="isEditMode">
+      <label class="toggle-label">
+        <span>Deseja alterar o Responsável?</span>
+        <div class="toggle-switch" (click)="toggleAssigneeEmailField(); $event.preventDefault()">
+          <input type="checkbox" [checked]="showAssigneeEmailField" readonly />
+          <span class="slider"></span>
+        </div>
+      </label>
+      <small class="current-value" *ngIf="currentTask && !showAssigneeEmailField">
+        Responsável atual: {{ currentTask.assignee.email }}
+      </small>
+    </div>
+
+    <div class="form-group autocomplete-wrapper" *ngIf="!isEditMode || showAssigneeEmailField">
+      <label for="assigneeEmail">Email do Responsável {{ !isEditMode ? '*' : '' }}</label>
       <input
         type="email"
         id="assigneeEmail"
         formControlName="assigneeEmail"
-        placeholder="Digite o email do responsável"
+        [placeholder]="isEditMode && currentTask ? currentTask.assignee.email : 'Digite o email do responsável'"
         [class.error]="assigneeEmail?.invalid && assigneeEmail?.touched"
         (blur)="onEmailInputBlur()"
         autocomplete="off"
