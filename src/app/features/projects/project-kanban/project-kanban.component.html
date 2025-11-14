@@ -31,13 +31,26 @@
 
     <div class="kanban-board">
       <!-- TODO Column -->
-      <div class="kanban-column todo-column">
+      <div 
+        class="kanban-column todo-column"
+        [class.drag-over]="draggedOverColumn === 'TODO'"
+        (dragover)="onDragOver($event)"
+        (dragenter)="onDragEnter('TODO', $event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop('TODO', $event)">
         <div class="column-header">
           <h2>📋 A Fazer</h2>
           <span class="task-count">{{ todoTasks.length }}</span>
         </div>
         <div class="column-content">
-          <div class="kanban-card" *ngFor="let task of todoTasks" [routerLink]="['/tasks', task.id]">
+          <div 
+            class="kanban-card" 
+            *ngFor="let task of todoTasks" 
+            draggable="true"
+            (dragstart)="onDragStart(task, $event)"
+            (dragend)="onDragEnd($event)"
+            (click)="$event.preventDefault()"
+            [routerLink]="['/tasks', task.id]">
             <div class="card-header">
               <h3>{{ task.title }}</h3>
               <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
@@ -55,25 +68,34 @@
                 <span>{{ task.dueDate | date: 'dd/MM' }}</span>
               </div>
             </div>
-            <div class="card-actions">
-              <button class="btn-move" (click)="updateTaskStatus(task, 'DOING'); $event.stopPropagation()">
-                → Em Progresso
-              </button>
-            </div>
           </div>
           <div class="empty-column" *ngIf="todoTasks.length === 0">
-            <p>Nenhuma tarefa</p>
+            <p>Arraste tarefas aqui</p>
           </div>
         </div>
       </div>
 
-      <div class="kanban-column doing-column">
+      <!-- DOING Column -->
+      <div 
+        class="kanban-column doing-column"
+        [class.drag-over]="draggedOverColumn === 'DOING'"
+        (dragover)="onDragOver($event)"
+        (dragenter)="onDragEnter('DOING', $event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop('DOING', $event)">
         <div class="column-header">
           <h2>⚙️ Em Progresso</h2>
           <span class="task-count">{{ doingTasks.length }}</span>
         </div>
         <div class="column-content">
-          <div class="kanban-card" *ngFor="let task of doingTasks" [routerLink]="['/tasks', task.id]">
+          <div 
+            class="kanban-card" 
+            *ngFor="let task of doingTasks" 
+            draggable="true"
+            (dragstart)="onDragStart(task, $event)"
+            (dragend)="onDragEnd($event)"
+            (click)="$event.preventDefault()"
+            [routerLink]="['/tasks', task.id]">
             <div class="card-header">
               <h3>{{ task.title }}</h3>
               <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
@@ -91,28 +113,34 @@
                 <span>{{ task.dueDate | date: 'dd/MM' }}</span>
               </div>
             </div>
-            <div class="card-actions">
-              <button class="btn-move-back" (click)="updateTaskStatus(task, 'TODO'); $event.stopPropagation()">
-                ← A Fazer
-              </button>
-              <button class="btn-move" (click)="updateTaskStatus(task, 'DONE'); $event.stopPropagation()">
-                → Concluída
-              </button>
-            </div>
           </div>
           <div class="empty-column" *ngIf="doingTasks.length === 0">
-            <p>Nenhuma tarefa</p>
+            <p>Arraste tarefas aqui</p>
           </div>
         </div>
       </div>
 
-      <div class="kanban-column done-column">
+      <!-- DONE Column -->
+      <div 
+        class="kanban-column done-column"
+        [class.drag-over]="draggedOverColumn === 'DONE'"
+        (dragover)="onDragOver($event)"
+        (dragenter)="onDragEnter('DONE', $event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop('DONE', $event)">
         <div class="column-header">
           <h2>✅ Concluída</h2>
           <span class="task-count">{{ doneTasks.length }}</span>
         </div>
         <div class="column-content">
-          <div class="kanban-card completed" *ngFor="let task of doneTasks" [routerLink]="['/tasks', task.id]">
+          <div 
+            class="kanban-card completed" 
+            *ngFor="let task of doneTasks" 
+            draggable="true"
+            (dragstart)="onDragStart(task, $event)"
+            (dragend)="onDragEnd($event)"
+            (click)="$event.preventDefault()"
+            [routerLink]="['/tasks', task.id]">
             <div class="card-header">
               <h3>{{ task.title }}</h3>
               <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
@@ -130,14 +158,9 @@
                 <span>{{ task.dueDate | date: 'dd/MM' }}</span>
               </div>
             </div>
-            <div class="card-actions">
-              <button class="btn-move-back" (click)="updateTaskStatus(task, 'DOING'); $event.stopPropagation()">
-                ← Em Progresso
-              </button>
-            </div>
           </div>
           <div class="empty-column" *ngIf="doneTasks.length === 0">
-            <p>Nenhuma tarefa</p>
+            <p>Arraste tarefas aqui</p>
           </div>
         </div>
       </div>

@@ -27,6 +27,8 @@ export class ProjectKanbanComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
   serviceUnavailable = false;
+  draggedTask: Task | null = null;
+  draggedOverColumn: string | null = null;
 
   ngOnInit(): void {
     const projectId = this.route.snapshot.paramMap.get('id');
@@ -118,5 +120,51 @@ export class ProjectKanbanComponent implements OnInit {
     if (this.project) {
       this.loadTasks(this.project.id);
     }
+  }
+
+  // Drag and Drop handlers
+  onDragStart(task: Task, event: DragEvent): void {
+    this.draggedTask = task;
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/html', '');
+    }
+  }
+
+  onDragEnd(event: DragEvent): void {
+    this.draggedTask = null;
+    this.draggedOverColumn = null;
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move';
+    }
+  }
+
+  onDragEnter(column: string, event: DragEvent): void {
+    event.preventDefault();
+    this.draggedOverColumn = column;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    const target = event.target as HTMLElement;
+    const relatedTarget = event.relatedTarget as HTMLElement;
+    
+    // Only remove highlight if we're leaving the column entirely
+    if (!target.contains(relatedTarget)) {
+      this.draggedOverColumn = null;
+    }
+  }
+
+  onDrop(newStatus: string, event: DragEvent): void {
+    event.preventDefault();
+    this.draggedOverColumn = null;
+
+    if (this.draggedTask && this.draggedTask.status !== newStatus) {
+      this.updateTaskStatus(this.draggedTask, newStatus);
+    }
+    this.draggedTask = null;
   }
 }

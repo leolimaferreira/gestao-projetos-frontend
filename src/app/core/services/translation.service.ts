@@ -35,6 +35,9 @@ export class TranslationService {
     'Error deleting task': 'Erro ao deletar tarefa',
     'Task title already exists': 'Título da tarefa já existe',
     'Task title is required': 'Título da tarefa é obrigatório',
+    'You can only change the status of a task to DOING if it is in status TODO.': 'Você só pode alterar o status de uma tarefa para EM PROGRESSO se ela estiver no status A FAZER.',
+    'You cannot update a task to DONE less than 30 minutes after its creation': 'Você não pode atualizar uma tarefa para CONCLUÍDA em menos de 30 minutos após sua criação.',
+    'You can only change the status of a task to DONE if it is in status DOING.': 'Você só pode alterar o status de uma tarefa para CONCLUÍDA se ela estiver no status EM PROGRESSO.',
     
     'Error loading users': 'Erro ao carregar usuários',
     'User without permission': 'Usuário sem permissão',
@@ -63,17 +66,26 @@ export class TranslationService {
   translate(message: string): string {
     if (!message) return '';
     
+    let cleanMessage = message
+      .replace(/^[–\-\s]+/, '')
+      .replace(/^["'\s]+|["'\s]+$/g, '')
+      .trim();
+    
+    if (this.translations[cleanMessage]) {
+      return this.translations[cleanMessage];
+    }
+    
     if (this.translations[message]) {
       return this.translations[message];
     }
     
-    let translatedMessage = message;
+    let translatedMessage = cleanMessage;
     let foundTranslation = false;
     
     const sortedKeys = Object.keys(this.translations).sort((a, b) => b.length - a.length);
     
     for (const englishKey of sortedKeys) {
-      if (message.includes(englishKey)) {
+      if (cleanMessage.includes(englishKey)) {
         const portugueseValue = this.translations[englishKey];
         translatedMessage = translatedMessage.split(englishKey).join(portugueseValue);
         foundTranslation = true;
@@ -84,7 +96,7 @@ export class TranslationService {
       return translatedMessage;
     }
     
-    return message;
+    return cleanMessage;
   }
 
   translateErrors(errors: string[]): string[] {
