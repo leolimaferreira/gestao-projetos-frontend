@@ -1,0 +1,108 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TaskService } from '../../../core/services/task.service';
+import { Task } from '../../../shared/models/task.model';
+import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
+
+@Component({
+  selector: 'app-task-detail',
+  standalone: true,
+  imports: [CommonModule, RouterLink, ServiceUnavailableComponent],
+  templateUrl: './task-detail.component.html',
+  styleUrl: './task-detail.component.css'
+})
+export class TaskDetailComponent implements OnInit {
+  private readonly taskService = inject(TaskService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+
+  task: Task | null = null;
+  isLoading = true;
+  errorMessage = '';
+  serviceUnavailable = false;
+
+  ngOnInit(): void {
+    const taskId = this.route.snapshot.paramMap.get('id');
+    if (taskId) {
+      this.loadTask(taskId);
+    } else {
+      this.router.navigate(['/tasks']);
+    }
+  }
+
+  loadTask(id: string): void {
+    this.isLoading = true;
+    this.serviceUnavailable = false;
+    this.errorMessage = '';
+
+    this.taskService.getById(id).subscribe({
+      next: (task) => {
+        this.task = task;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar tarefa:', error);
+        if (error.status === 0) {
+          this.serviceUnavailable = true;
+          this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';
+        } else {
+          this.errorMessage = error.error?.message || 'Erro ao carregar tarefa.';
+        }
+        this.isLoading = false;
+      }
+    });
+  }
+
+  deleteTask(): void {
+    if (!this.task) return;
+
+    if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+      this.taskService.delete(this.task.id).subscribe({
+        next: () => {
+          this.router.navigate(['/tasks']);
+        },
+        error: (error) => {
+          console.error('Erro ao excluir tarefa:', error);
+          this.errorMessage = error.error?.message || 'Erro ao excluir tarefa.';
+        }
+      });
+    }
+  }
+
+  getStatusLabel(status: string): string {
+    const labels: { [key: string]: string } = {
+      'TODO': 'A Fazer',
+      'DOING': 'Em Progresso',
+      'DONE': 'Concluída'
+    };
+    return labels[status] || status;
+  }
+
+  getPriorityLabel(priority: string): string {
+    const labels: { [key: string]: string } = {
+      'LOW': 'Baixa',
+      'MEDIUM': 'Média',
+      'HIGH': 'Alta'
+    };
+    return labels[priority] || priority;
+  }
+
+  getStatusClass(status: string): string {
+    const classes: { [key: string]: string } = {
+      'TODO': 'status-todo',
+      'DOING': 'status-doing',
+      'DONE': 'status-done'
+    };
+    return classes[status] || '';
+  }
+
+  getPriorityClass(priority: string): string {
+    const classes: { [key: string]: string } = {
+      'LOW': 'priority-low',
+      'MEDIUM': 'priority-medium',
+      'HIGH': 'priority-high'
+    };
+    return classes[priority] || '';
+  }
+}

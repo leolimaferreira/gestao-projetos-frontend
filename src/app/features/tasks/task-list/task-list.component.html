@@ -101,8 +101,9 @@
         </div>
 
         <div class="task-actions">
-          <button class="btn-edit" [routerLink]="['/tasks/edit', task.id]">Editar</button>
-          <button class="btn-delete" (click)="deleteTask(task.id)">Excluir</button>
+          <button class="btn-view" [routerLink]="['/tasks', task.id]">👁️ Ver</button>
+          <button class="btn-edit" [routerLink]="['/tasks/edit', task.id]">✏️ Editar</button>
+          <button class="btn-delete" (click)="deleteTask(task.id)">🗑️ Excluir</button>
         </div>
       </div>
     </div>

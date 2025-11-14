@@ -1,0 +1,108 @@
+<div class="task-detail-container">
+  <!-- Service Unavailable -->
+  <app-service-unavailable 
+    *ngIf="serviceUnavailable && !isLoading"
+    [message]="errorMessage"
+    (retry)="loadTask(task?.id || '')"
+  ></app-service-unavailable>
+
+  <div class="loading" *ngIf="isLoading">
+    <p>Carregando tarefa...</p>
+  </div>
+
+  <div class="detail-content" *ngIf="task && !isLoading && !serviceUnavailable">
+    <div class="header">
+      <div class="header-content">
+        <h1>{{ task.title }}</h1>
+        <div class="header-actions">
+          <button class="btn-edit" [routerLink]="['/tasks/edit', task.id]">
+            ✏️ Editar
+          </button>
+          <button class="btn-delete" (click)="deleteTask()">
+            🗑️ Excluir
+          </button>
+          <button class="btn-back" routerLink="/tasks">
+            ← Voltar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <!-- Status e Prioridade -->
+      <div class="badges-section">
+        <div class="badge-item">
+          <span class="badge-label">Status:</span>
+          <span class="badge" [ngClass]="getStatusClass(task.status)">
+            {{ getStatusLabel(task.status) }}
+          </span>
+        </div>
+        <div class="badge-item">
+          <span class="badge-label">Prioridade:</span>
+          <span class="badge" [ngClass]="getPriorityClass(task.priority)">
+            {{ getPriorityLabel(task.priority) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Descrição</h3>
+        <p class="description">{{ task.description || 'Sem descrição' }}</p>
+      </div>
+
+      <div class="info-section">
+        <h3>Projeto</h3>
+        <div class="project-info">
+          <div class="info-item">
+            <span class="info-icon">📁</span>
+            <div class="info-content">
+              <span class="info-label">Nome do Projeto</span>
+              <span class="info-value">{{ task.project.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Responsável</h3>
+        <div class="assignee-info">
+          <div class="info-item">
+            <span class="info-icon">👤</span>
+            <div class="info-content">
+              <span class="info-label">Email</span>
+              <span class="info-value">{{ task.assignee.email }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Datas</h3>
+        <div class="dates-grid">
+          <div class="info-item">
+            <span class="info-icon">📅</span>
+            <div class="info-content">
+              <span class="info-label">Data de Vencimento</span>
+              <span class="info-value">{{ task.dueDate | date: 'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Not Found -->
+  <div class="not-found" *ngIf="!task && !isLoading && !serviceUnavailable">
+    <div class="error-icon">❌</div>
+    <h2>Tarefa não encontrada</h2>
+    <p>A tarefa que você está procurando não existe ou foi removida.</p>
+    <button class="btn-back" routerLink="/tasks">
+      ← Voltar para Tarefas
+    </button>
+  </div>
+</div>

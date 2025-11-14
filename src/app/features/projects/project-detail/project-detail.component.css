@@ -156,11 +156,14 @@
   border: 1px solid #dee2e6;
   border-radius: 6px;
   padding: 1.25rem;
-  transition: box-shadow 0.3s;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 .task-card:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: #667eea;
 }
 
 .task-header {

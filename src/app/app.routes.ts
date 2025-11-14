@@ -21,14 +21,12 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
   },
 
-  // Rotas protegidas (necessitam autenticação)
   {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
     canActivate: [authGuard]
   },
 
-  // Projetos
   {
     path: 'projects',
     loadComponent: () => import('./features/projects/project-list/project-list.component').then(m => m.ProjectListComponent),
@@ -50,7 +48,6 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
 
-  // Tarefas
   {
     path: 'tasks',
     loadComponent: () => import('./features/tasks/task-list/task-list.component').then(m => m.TaskListComponent),
@@ -66,15 +63,18 @@ export const routes: Routes = [
     loadComponent: () => import('./features/tasks/task-form/task-form.component').then(m => m.TaskFormComponent),
     canActivate: [authGuard]
   },
+  {
+    path: 'tasks/:id',
+    loadComponent: () => import('./features/tasks/task-detail/task-detail.component').then(m => m.TaskDetailComponent),
+    canActivate: [authGuard]
+  },
 
-  // Rota padrão
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
 
-  // Rota 404
   {
     path: '**',
     redirectTo: 'login'
