@@ -6,8 +6,6 @@ import { TaskService } from '../../../core/services/task.service';
 import { ProjectService } from '../../../core/services/project.service';
 import { UserService } from '../../../core/services/user.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { Priority } from '../../../shared/enums/priority.enum';
-import { Status } from '../../../shared/enums/status.enum';
 import { Project } from '../../../shared/models/project.model';
 
 @Component({
@@ -71,7 +69,6 @@ export class TaskFormComponent implements OnInit {
     if (this.isEditMode && this.taskId) {
       this.loadTask(this.taskId);
     } else {
-      // Modo de criação - definir validações obrigatórias
       this.setCreateValidators();
     }
 
@@ -176,7 +173,6 @@ export class TaskFormComponent implements OnInit {
       let taskData: any;
 
       if (this.isEditMode) {
-        // No modo de edição, envia apenas campos não vazios
         taskData = {};
         const formValue = this.taskForm.value;
         
@@ -187,7 +183,6 @@ export class TaskFormComponent implements OnInit {
         if (formValue.dueDate) taskData.dueDate = formValue.dueDate;
         if (formValue.assigneeEmail) taskData.assigneeEmail = formValue.assigneeEmail;
       } else {
-        // No modo de criação, envia todos os campos
         taskData = {
           title: this.taskForm.value.title,
           description: this.taskForm.value.description,
