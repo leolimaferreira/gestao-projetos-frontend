@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TaskService, TaskFilters } from '../../../core/services/task.service';
 import { Task } from '../../../shared/models/task.model';
-import { Page } from '../../../shared/models/page.model';
 import { Status } from '../../../shared/enums/status.enum';
 import { Priority } from '../../../shared/enums/priority.enum';
 import { AuthService } from '../../../core/services/auth.service';
@@ -20,9 +19,14 @@ export class TaskListComponent implements OnInit {
   private readonly taskService = inject(TaskService);
   private readonly authService = inject(AuthService);
 
+  allTasks: Task[] = [];
   tasks: Task[] = [];
   isLoading = false;
   errorMessage = '';
+
+  currentPage = 0;
+  pageSize = 10;
+  totalPages = 0;
 
   filters: TaskFilters = {
     title: '',
@@ -45,8 +49,9 @@ export class TaskListComponent implements OnInit {
     this.errorMessage = '';
 
     this.taskService.getByAssigneeId(this.authService.getUserId()).subscribe({
-      next: (task) => {
-        this.tasks = task;
+      next: (tasks) => {
+        this.allTasks = tasks;
+        this.applyFiltersAndPagination();
         this.isLoading = false;
       },
       error: (error) => {
@@ -57,8 +62,42 @@ export class TaskListComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.filters.page = 0;
-    this.loadTasks();
+    this.currentPage = 0;
+    this.applyFiltersAndPagination();
+  }
+
+  applyFiltersAndPagination(): void {
+    let filteredTasks = this.allTasks;
+
+    if (this.filters.title) {
+      filteredTasks = filteredTasks.filter(task => 
+        task.title.toLowerCase().includes(this.filters.title!.toLowerCase())
+      );
+    }
+
+    if (this.filters.status) {
+      filteredTasks = filteredTasks.filter(task => 
+        task.status === this.filters.status
+      );
+    }
+
+    if (this.filters.priority) {
+      filteredTasks = filteredTasks.filter(task => 
+        task.priority === this.filters.priority
+      );
+    }
+
+    if (this.filters.projectName) {
+      filteredTasks = filteredTasks.filter(task => 
+        task.project.name.toLowerCase().includes(this.filters.projectName!.toLowerCase())
+      );
+    }
+
+    this.totalPages = Math.ceil(filteredTasks.length / this.pageSize);
+    
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.tasks = filteredTasks.slice(startIndex, endIndex);
   }
 
   clearFilters(): void {
@@ -70,7 +109,8 @@ export class TaskListComponent implements OnInit {
       page: 0,
       size: 20
     };
-    this.loadTasks();
+    this.currentPage = 0;
+    this.applyFiltersAndPagination();
   }
 
   deleteTask(id: string): void {
@@ -102,6 +142,55 @@ export class TaskListComponent implements OnInit {
       'HIGH': 'priority-high'
     };
     return classes[priority] || '';
+  }
+
+  // Métodos de paginação
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.applyFiltersAndPagination();
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.applyFiltersAndPagination();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.applyFiltersAndPagination();
+    }
+  }
+
+  get pageNumbers(): number[] {
+    const pages: number[] = [];
+    const maxPages = 5;
+    let start = Math.max(0, this.currentPage - 2);
+    let end = Math.min(this.totalPages - 1, start + maxPages - 1);
+    
+    if (end - start < maxPages - 1) {
+      start = Math.max(0, end - maxPages + 1);
+    }
+    
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
+  }
+
+  get totalTasks(): number {
+    return this.allTasks.length;
+  }
+
+  get startTaskIndex(): number {
+    return this.currentPage * this.pageSize + 1;
+  }
+
+  get endTaskIndex(): number {
+    return Math.min((this.currentPage + 1) * this.pageSize, this.totalTasks);
   }
 
 }

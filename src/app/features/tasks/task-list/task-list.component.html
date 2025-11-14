@@ -107,9 +107,44 @@
       </div>
     </div>
 
-    <div class="empty-state" *ngIf="!isLoading && tasks.length === 0">
+    <div class="empty-state" *ngIf="!isLoading && tasks.length === 0 && allTasks.length === 0">
       <p>Nenhuma tarefa encontrada.</p>
       <button class="btn-primary" routerLink="/tasks/new">Criar Nova Tarefa</button>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && tasks.length === 0 && allTasks.length > 0">
+      <p>Nenhuma tarefa encontrada com os filtros aplicados.</p>
+      <button class="btn-secondary" (click)="clearFilters()">Limpar Filtros</button>
+    </div>
+
+    <div class="pagination" *ngIf="!isLoading && totalPages > 1">
+      <button 
+        class="pagination-btn" 
+        [disabled]="currentPage === 0" 
+        (click)="previousPage()">
+        ← Anterior
+      </button>
+
+      <div class="pagination-numbers">
+        <button 
+          *ngFor="let pageNum of pageNumbers"
+          class="pagination-number"
+          [class.active]="pageNum === currentPage"
+          (click)="goToPage(pageNum)">
+          {{ pageNum + 1 }}
+        </button>
+      </div>
+
+      <button 
+        class="pagination-btn" 
+        [disabled]="currentPage === totalPages - 1" 
+        (click)="nextPage()">
+        Próxima →
+      </button>
+
+      <div class="pagination-info">
+        {{ startTaskIndex }}-{{ endTaskIndex }} de {{ totalTasks }} tarefas
+      </div>
     </div>
   </div>
 </div>
