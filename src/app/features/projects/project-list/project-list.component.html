@@ -1,15 +1,67 @@
 <div class="project-list-container">
   <div class="header">
     <div class="header-content">
-      <button class="btn-back" routerLink="/dashboard">← Dashboard</button>
       <h1>Projetos</h1>
-      <button class="btn-primary" routerLink="/projects/new">
-        <span>+ Novo Projeto</span>
-      </button>
+      <div class="header-actions">
+        <button class="btn-secondary" routerLink="/dashboard">
+          ← Dashboard
+        </button>
+        <button class="btn-primary" routerLink="/projects/new">
+          + Novo Projeto
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="content">
+    <div class="filters-card">
+      <h3>Filtros</h3>
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label for="name">Nome</label>
+          <input
+            type="text"
+            id="name"
+            [(ngModel)]="filters.name"
+            placeholder="Buscar por nome"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="description">Descrição</label>
+          <input
+            type="text"
+            id="description"
+            [(ngModel)]="filters.description"
+            placeholder="Descrição do projeto"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="startDate">Data de Início</label>
+          <input
+            type="date"
+            id="startDate"
+            [(ngModel)]="startDateFilter"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="endDate">Data de Término</label>
+          <input
+            type="date"
+            id="endDate"
+            [(ngModel)]="endDateFilter"
+          />
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn-filter" (click)="applyFilters()">Aplicar Filtros</button>
+        <button class="btn-clear" (click)="clearFilters()">Limpar</button>
+      </div>
+    </div>
+
     <div class="error-alert" *ngIf="errorMessage">
       {{ errorMessage }}
     </div>
@@ -18,37 +70,74 @@
       <p>Carregando projetos...</p>
     </div>
 
-    <div class="projects-grid" *ngIf="!isLoading && projects.length > 0">
+    <div class="projects-list" *ngIf="!isLoading && projects.length > 0">
       <div class="project-card" *ngFor="let project of projects">
         <div class="project-header">
-          <h3>{{ project.name }}</h3>
-          <span class="project-owner">Por: {{ project.owner.name }}</span>
+          <div class="project-title-row">
+            <h3>{{ project.name }}</h3>
+            <span class="project-owner-badge">Por: {{ project.owner.name }}</span>
+          </div>
         </div>
-        
+
         <p class="project-description">{{ project.description }}</p>
-        
-        <div class="project-dates">
-          <div class="date-item">
-            <span class="date-label">Início:</span>
+
+        <div class="project-info">
+          <div class="info-item">
+            <span class="info-label">Início:</span>
             <span>{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
           </div>
-          <div class="date-item">
-            <span class="date-label">Término:</span>
+          <div class="info-item">
+            <span class="info-label">Término:</span>
             <span>{{ project.endDate | date: 'dd/MM/yyyy' }}</span>
           </div>
         </div>
 
         <div class="project-actions">
-          <button class="btn-secondary" [routerLink]="['/projects', project.id]">Ver Detalhes</button>
-          <button class="btn-edit" [routerLink]="['/projects/edit', project.id]">Editar</button>
-          <button class="btn-delete" (click)="deleteProject(project.id)">Excluir</button>
+          <button class="btn-view" [routerLink]="['/projects', project.id]">👁️ Ver</button>
+          <button class="btn-edit" [routerLink]="['/projects/edit', project.id]">✏️ Editar</button>
+          <button class="btn-delete" (click)="deleteProject(project.id)">🗑️ Excluir</button>
         </div>
       </div>
     </div>
 
-    <div class="empty-state" *ngIf="!isLoading && projects.length === 0">
+    <div class="empty-state" *ngIf="!isLoading && projects.length === 0 && allProjects.length === 0">
       <p>Nenhum projeto encontrado.</p>
-      <button class="btn-primary" routerLink="/projects/new">Criar Primeiro Projeto</button>
+      <button class="btn-primary" routerLink="/projects/new">Criar Novo Projeto</button>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && projects.length === 0 && allProjects.length > 0">
+      <p>Nenhum projeto encontrado com os filtros aplicados.</p>
+      <button class="btn-secondary" (click)="clearFilters()">Limpar Filtros</button>
+    </div>
+
+    <div class="pagination" *ngIf="!isLoading && totalPages > 1">
+      <button 
+        class="pagination-btn" 
+        [disabled]="currentPage === 0" 
+        (click)="previousPage()">
+        ← Anterior
+      </button>
+
+      <div class="pagination-numbers">
+        <button 
+          *ngFor="let pageNum of pageNumbers"
+          class="pagination-number"
+          [class.active]="pageNum === currentPage"
+          (click)="goToPage(pageNum)">
+          {{ pageNum + 1 }}
+        </button>
+      </div>
+
+      <button 
+        class="pagination-btn" 
+        [disabled]="currentPage === totalPages - 1" 
+        (click)="nextPage()">
+        Próxima →
+      </button>
+
+      <div class="pagination-info">
+        {{ startProjectIndex }}-{{ endProjectIndex }} de {{ totalProjects }} projetos
+      </div>
     </div>
   </div>
 </div>

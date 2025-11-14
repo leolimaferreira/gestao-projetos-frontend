@@ -5,6 +5,16 @@ import { environment } from '../../../environments/environment';
 import { Project, ProjectRequest, UpdateProject } from '../../shared/models/project.model';
 import { Page } from '../../shared/models/page.model';
 
+export interface ProjectFilters {
+  name?: string;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
+  owner?: string;
+  page?: number;
+  size?: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })

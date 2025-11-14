@@ -144,7 +144,6 @@ export class TaskListComponent implements OnInit {
     return classes[priority] || '';
   }
 
-  // Métodos de paginação
   goToPage(page: number): void {
     this.currentPage = page;
     this.applyFiltersAndPagination();
