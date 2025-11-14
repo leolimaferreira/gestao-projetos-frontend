@@ -7,6 +7,7 @@ import { Task } from '../../../shared/models/task.model';
 import { Page } from '../../../shared/models/page.model';
 import { Status } from '../../../shared/enums/status.enum';
 import { Priority } from '../../../shared/enums/priority.enum';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-task-list',
@@ -17,13 +18,12 @@ import { Priority } from '../../../shared/enums/priority.enum';
 })
 export class TaskListComponent implements OnInit {
   private readonly taskService = inject(TaskService);
+  private readonly authService = inject(AuthService);
 
   tasks: Task[] = [];
-  page: Page<Task> | null = null;
   isLoading = false;
   errorMessage = '';
 
-  // Filtros
   filters: TaskFilters = {
     title: '',
     status: '',
@@ -33,7 +33,6 @@ export class TaskListComponent implements OnInit {
     size: 20
   };
 
-  // Enums para os selects
   statuses = Object.values(Status);
   priorities = Object.values(Priority);
 
@@ -45,10 +44,9 @@ export class TaskListComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.taskService.getAll(this.filters).subscribe({
-      next: (page) => {
-        this.page = page;
-        this.tasks = page.content;
+    this.taskService.getByAssigneeId(this.authService.getUserId()).subscribe({
+      next: (task) => {
+        this.tasks = task;
         this.isLoading = false;
       },
       error: (error) => {
@@ -106,17 +104,4 @@ export class TaskListComponent implements OnInit {
     return classes[priority] || '';
   }
 
-  nextPage(): void {
-    if (this.page && !this.page.last) {
-      this.filters.page = (this.filters.page || 0) + 1;
-      this.loadTasks();
-    }
-  }
-
-  previousPage(): void {
-    if (this.page && !this.page.first && this.filters.page) {
-      this.filters.page--;
-      this.loadTasks();
-    }
-  }
 }

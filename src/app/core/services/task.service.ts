@@ -37,6 +37,10 @@ export class TaskService {
     return this.http.get<Page<Task>>(this.apiUrl, { params });
   }
 
+  getByAssigneeId(assigneeId: string): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}/assignee/${assigneeId}`);
+  }
+
   getByProjectId(projectId: string): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}/project/${projectId}`);
   }

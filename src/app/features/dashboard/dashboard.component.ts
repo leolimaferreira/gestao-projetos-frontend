@@ -47,9 +47,9 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.taskService.getAll({ page: 0, size: 1 }).subscribe({
-      next: (page) => {
-        this.totalTasks = page.totalElements;
+    this.taskService.getByAssigneeId(this.authService.getUserId()).subscribe({
+      next: (tasks) => {
+        this.totalTasks = tasks.length;
         this.isLoading = false;
       },
       error: (error) => {
