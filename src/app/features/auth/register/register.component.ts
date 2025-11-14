@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
+import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ServiceUnavailableComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -20,6 +21,7 @@ export class RegisterComponent {
   errorMessage = '';
   successMessage = '';
   isLoading = false;
+  serviceUnavailable = false;
 
   constructor() {
     this.registerForm = this.fb.group({
@@ -46,6 +48,7 @@ export class RegisterComponent {
       this.isLoading = true;
       this.errorMessage = '';
       this.successMessage = '';
+      this.serviceUnavailable = false;
 
       const userData = {
         name: this.registerForm.value.name,
@@ -62,7 +65,12 @@ export class RegisterComponent {
           }, 2000);
         },
         error: (error) => {
-          this.errorMessage = error.error?.message || 'Erro ao cadastrar usuário.';
+          if (error.status === 0) {
+            this.serviceUnavailable = true;
+            this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';
+          } else {
+            this.errorMessage = error.error?.message || 'Erro ao cadastrar usuário.';
+          }
           this.isLoading = false;
         },
         complete: () => {
@@ -70,6 +78,11 @@ export class RegisterComponent {
         }
       });
     }
+  }
+
+  retryRegister(): void {
+    this.serviceUnavailable = false;
+    this.errorMessage = '';
   }
 
   get name() {

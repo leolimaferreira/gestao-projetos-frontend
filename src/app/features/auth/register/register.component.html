@@ -1,5 +1,11 @@
 <div class="register-container">
-  <div class="register-card">
+  <app-service-unavailable 
+    *ngIf="serviceUnavailable"
+    [message]="errorMessage"
+    (retry)="retryRegister()"
+  ></app-service-unavailable>
+
+  <div class="register-card" *ngIf="!serviceUnavailable">
     <div class="register-header">
       <h1>Criar Conta</h1>
       <p>Preencha os dados para se cadastrar</p>
@@ -70,7 +76,7 @@
         {{ successMessage }}
       </div>
 
-      <div class="error-alert" *ngIf="errorMessage">
+      <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
         {{ errorMessage }}
       </div>
 

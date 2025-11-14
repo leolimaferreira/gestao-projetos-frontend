@@ -1,0 +1,70 @@
+.service-unavailable {
+  background: white;
+  border-radius: 16px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 60px auto;
+  border: 2px solid #feb2b2;
+}
+
+.error-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.service-unavailable h2 {
+  font-size: 28px;
+  color: #c53030;
+  margin: 0 0 16px 0;
+  font-weight: 700;
+}
+
+.service-unavailable p {
+  font-size: 16px;
+  color: #4a5568;
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+}
+
+.sub-message {
+  font-size: 14px;
+  color: #718096;
+  font-style: italic;
+  margin-bottom: 32px !important;
+}
+
+.btn-retry {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-retry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+.btn-retry:active {
+  transform: translateY(0);
+}

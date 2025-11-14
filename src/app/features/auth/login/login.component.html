@@ -1,5 +1,11 @@
 <div class="login-container">
-  <div class="login-card">
+  <app-service-unavailable 
+    *ngIf="serviceUnavailable"
+    [message]="errorMessage"
+    (retry)="retryLogin()"
+  ></app-service-unavailable>
+
+  <div class="login-card" *ngIf="!serviceUnavailable">
     <div class="login-header">
       <h1>Gestão de Projetos</h1>
       <p>Faça login para continuar</p>
@@ -40,7 +46,7 @@
         <a routerLink="/auth/forgot-password" class="forgot-password">Esqueceu a senha?</a>
       </div>
 
-      <div class="error-alert" *ngIf="errorMessage">
+      <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
         {{ errorMessage }}
       </div>
 

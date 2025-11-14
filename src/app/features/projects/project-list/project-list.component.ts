@@ -20,6 +20,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   isLoading = false;
   errorMessage = '';
+  serviceUnavailable = false;
 
   ngOnInit(): void {
     this.loadProjects();
@@ -28,6 +29,7 @@ export class ProjectListComponent implements OnInit {
   loadProjects(): void {
     this.isLoading = true;
     this.errorMessage = '';
+    this.serviceUnavailable = false;
     const userId = this.authService.getUserId();
     
     if (!userId) {
@@ -36,17 +38,20 @@ export class ProjectListComponent implements OnInit {
       return;
     }
 
-    console.log('Buscando projetos para o usuário:', userId);
     
     this.projectService.getByOwnerId(userId).subscribe({
       next: (projects) => {
-        console.log('Projetos carregados:', projects);
         this.projects = projects;
         this.isLoading = false;
       },
       error: (error) => {
         console.error('Erro ao carregar projetos:', error);
-        this.errorMessage = error.error?.message || error.message || 'Erro ao carregar projetos.';
+        if (error.status === 0) {
+          this.serviceUnavailable = true;
+          this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';
+        } else {
+          this.errorMessage = error.error?.message || error.message || 'Erro ao carregar projetos.';
+        }
         this.isLoading = false;
       }
     });

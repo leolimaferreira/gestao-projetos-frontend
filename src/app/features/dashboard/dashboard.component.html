@@ -10,11 +10,17 @@
   </div>
 
   <div class="content">
+    <app-service-unavailable 
+      *ngIf="serviceUnavailable && !isLoading"
+      [message]="errorMessage"
+      (retry)="loadDashboardData()"
+    ></app-service-unavailable>
+
     <div class="loading" *ngIf="isLoading">
       <p>Carregando dados...</p>
     </div>
 
-    <div class="stats-grid" *ngIf="!isLoading">
+    <div class="stats-grid" *ngIf="!isLoading && !serviceUnavailable">
       <div class="stat-card projects">
         <div class="stat-icon">📁</div>
         <div class="stat-info">
@@ -34,7 +40,7 @@
       </div>
     </div>
 
-    <div class="quick-actions">
+    <div class="quick-actions" *ngIf="!serviceUnavailable">
       <h2>Ações Rápidas</h2>
       <div class="actions-grid">
         <button class="action-card" routerLink="/projects/new">

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ServiceUnavailableComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,6 +20,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage = '';
   isLoading = false;
+  serviceUnavailable = false;
 
   constructor() {
     this.loginForm = this.fb.group({
@@ -31,13 +33,19 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
+      this.serviceUnavailable = false;
 
       this.authService.login(this.loginForm.value).subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
-          this.errorMessage = error.error?.message || 'Erro ao fazer login. Verifique suas credenciais.';
+          if (error.status === 0) {
+            this.serviceUnavailable = true;
+            this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';
+          } else {
+            this.errorMessage = error.error?.message || 'Erro ao fazer login. Verifique suas credenciais.';
+          }
           this.isLoading = false;
         },
         complete: () => {
@@ -45,6 +53,11 @@ export class LoginComponent {
         }
       });
     }
+  }
+
+  retryLogin(): void {
+    this.serviceUnavailable = false;
+    this.errorMessage = '';
   }
 
   get email() {
