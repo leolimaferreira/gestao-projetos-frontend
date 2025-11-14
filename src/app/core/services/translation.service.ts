@@ -7,10 +7,9 @@ export class TranslationService {
   
   private readonly translations: { [key: string]: string } = {
     
-    'Invalid credentials': 'Credenciais inválidas',
+    'Invalid credentials': 'Email ou senha inválidos',
     'Token expired': 'Token expirado',
     'User not found': 'Usuário não encontrado',
-    'User not found with email': 'Usuário não encontrado com o email',
     'Email already registered': 'Email já cadastrado',
     'Incorrect password': 'Senha incorreta',
     'Invalid email or password': 'Email ou senha inválidos',
