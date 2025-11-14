@@ -13,6 +13,9 @@
         ← Voltar para Projetos
       </button>
       <div class="header-actions">
+        <button class="btn-kanban" [routerLink]="['/projects', project.id, 'kanban']">
+          📊 Kanban
+        </button>
         <button class="btn-edit" [routerLink]="['/projects/edit', project.id]">
           Editar
         </button>

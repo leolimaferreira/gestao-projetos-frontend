@@ -1,0 +1,146 @@
+<div class="kanban-container">
+  <app-service-unavailable 
+    *ngIf="serviceUnavailable && !isLoading"
+    [message]="errorMessage"
+    (retry)="retryLoad()"
+  ></app-service-unavailable>
+
+  <div class="loading" *ngIf="isLoading">
+    <p>Carregando quadro Kanban...</p>
+  </div>
+
+  <div class="kanban-content" *ngIf="!isLoading && !serviceUnavailable">
+    <div class="kanban-header">
+      <div class="header-left">
+        <button class="btn-back" [routerLink]="['/projects', project?.id]">
+          ← Voltar
+        </button>
+        <div class="project-info" *ngIf="project">
+          <h1>{{ project.name }}</h1>
+          <p>Quadro Kanban</p>
+        </div>
+      </div>
+      <button class="btn-new-task" [routerLink]="['/tasks/new']">
+        ➕ Nova Tarefa
+      </button>
+    </div>
+
+    <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
+      {{ errorMessage }}
+    </div>
+
+    <div class="kanban-board">
+      <!-- TODO Column -->
+      <div class="kanban-column todo-column">
+        <div class="column-header">
+          <h2>📋 A Fazer</h2>
+          <span class="task-count">{{ todoTasks.length }}</span>
+        </div>
+        <div class="column-content">
+          <div class="kanban-card" *ngFor="let task of todoTasks" [routerLink]="['/tasks', task.id]">
+            <div class="card-header">
+              <h3>{{ task.title }}</h3>
+              <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
+                {{ getPriorityLabel(task.priority) }}
+              </span>
+            </div>
+            <p class="card-description">{{ task.description }}</p>
+            <div class="card-footer">
+              <div class="card-info">
+                <span class="info-icon">👤</span>
+                <span>{{ task.assignee.email }}</span>
+              </div>
+              <div class="card-info">
+                <span class="info-icon">📅</span>
+                <span>{{ task.dueDate | date: 'dd/MM' }}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn-move" (click)="updateTaskStatus(task, 'DOING'); $event.stopPropagation()">
+                → Em Progresso
+              </button>
+            </div>
+          </div>
+          <div class="empty-column" *ngIf="todoTasks.length === 0">
+            <p>Nenhuma tarefa</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="kanban-column doing-column">
+        <div class="column-header">
+          <h2>⚙️ Em Progresso</h2>
+          <span class="task-count">{{ doingTasks.length }}</span>
+        </div>
+        <div class="column-content">
+          <div class="kanban-card" *ngFor="let task of doingTasks" [routerLink]="['/tasks', task.id]">
+            <div class="card-header">
+              <h3>{{ task.title }}</h3>
+              <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
+                {{ getPriorityLabel(task.priority) }}
+              </span>
+            </div>
+            <p class="card-description">{{ task.description }}</p>
+            <div class="card-footer">
+              <div class="card-info">
+                <span class="info-icon">👤</span>
+                <span>{{ task.assignee.email }}</span>
+              </div>
+              <div class="card-info">
+                <span class="info-icon">📅</span>
+                <span>{{ task.dueDate | date: 'dd/MM' }}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn-move-back" (click)="updateTaskStatus(task, 'TODO'); $event.stopPropagation()">
+                ← A Fazer
+              </button>
+              <button class="btn-move" (click)="updateTaskStatus(task, 'DONE'); $event.stopPropagation()">
+                → Concluída
+              </button>
+            </div>
+          </div>
+          <div class="empty-column" *ngIf="doingTasks.length === 0">
+            <p>Nenhuma tarefa</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="kanban-column done-column">
+        <div class="column-header">
+          <h2>✅ Concluída</h2>
+          <span class="task-count">{{ doneTasks.length }}</span>
+        </div>
+        <div class="column-content">
+          <div class="kanban-card completed" *ngFor="let task of doneTasks" [routerLink]="['/tasks', task.id]">
+            <div class="card-header">
+              <h3>{{ task.title }}</h3>
+              <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
+                {{ getPriorityLabel(task.priority) }}
+              </span>
+            </div>
+            <p class="card-description">{{ task.description }}</p>
+            <div class="card-footer">
+              <div class="card-info">
+                <span class="info-icon">👤</span>
+                <span>{{ task.assignee.email }}</span>
+              </div>
+              <div class="card-info">
+                <span class="info-icon">📅</span>
+                <span>{{ task.dueDate | date: 'dd/MM' }}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn-move-back" (click)="updateTaskStatus(task, 'DOING'); $event.stopPropagation()">
+                ← Em Progresso
+              </button>
+            </div>
+          </div>
+          <div class="empty-column" *ngIf="doneTasks.length === 0">
+            <p>Nenhuma tarefa</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
