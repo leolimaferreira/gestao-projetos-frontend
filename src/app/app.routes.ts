@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  // Rotas públicas (autenticação)
   {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent)
@@ -19,6 +18,10 @@ export const routes: Routes = [
   {
     path: 'auth/forgot-password',
     loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () => import('./features/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
   },
 
   {

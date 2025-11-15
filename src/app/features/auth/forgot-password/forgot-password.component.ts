@@ -19,22 +19,14 @@ export class ForgotPasswordComponent {
   errorMessage = '';
   successMessage = '';
   isLoading = false;
-  tokenReceived = false;
-
-  changePasswordForm: FormGroup;
 
   constructor() {
     this.forgotForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
-
-    this.changePasswordForm = this.fb.group({
-      tokenId: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(8)]]
-    });
   }
 
-  onRequestToken(): void {
+  onSubmit(): void {
     if (this.forgotForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
@@ -42,10 +34,9 @@ export class ForgotPasswordComponent {
 
       this.authService.generateRecoveryToken(this.forgotForm.value).subscribe({
         next: (response) => {
-          this.successMessage = 'Token de recuperação enviado! Verifique seu e-mail.';
-          this.tokenReceived = true;
-          this.changePasswordForm.patchValue({ tokenId: response.id });
+          this.successMessage = 'Email de recuperação enviado! Verifique sua caixa de entrada e spam.';
           this.isLoading = false;
+          this.forgotForm.reset();
         },
         error: (error) => {
           this.errorMessage = error.error?.message || 'Erro ao solicitar recuperação de senha.';
@@ -55,34 +46,7 @@ export class ForgotPasswordComponent {
     }
   }
 
-  onChangePassword(): void {
-    if (this.changePasswordForm.valid) {
-      this.isLoading = true;
-      this.errorMessage = '';
-      this.successMessage = '';
-
-      this.authService.changePassword(this.changePasswordForm.value).subscribe({
-        next: () => {
-          this.successMessage = 'Senha alterada com sucesso! Você já pode fazer login.';
-          this.isLoading = false;
-        },
-        error: (error) => {
-          this.errorMessage = error.error?.message || 'Erro ao alterar senha.';
-          this.isLoading = false;
-        }
-      });
-    }
-  }
-
   get email() {
     return this.forgotForm.get('email');
-  }
-
-  get tokenId() {
-    return this.changePasswordForm.get('tokenId');
-  }
-
-  get newPassword() {
-    return this.changePasswordForm.get('newPassword');
   }
 }

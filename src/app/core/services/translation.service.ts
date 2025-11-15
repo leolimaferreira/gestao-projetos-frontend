@@ -42,6 +42,8 @@ export class TranslationService {
     'User without permission': 'Usuário sem permissão',
     'Email already exists': 'Email já existe',
     'User already exists': 'Usuário já existe',
+    'New password cannot be the same as the current one': 'A nova senha não pode ser igual à atual',
+    'Password recovery token expired': 'Token de recuperação de senha expirado',
     
     'Error loading data': 'Erro ao carregar dados',
     'Error saving': 'Erro ao salvar',
