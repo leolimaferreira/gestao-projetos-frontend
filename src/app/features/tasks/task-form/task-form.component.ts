@@ -101,7 +101,7 @@ export class TaskFormComponent implements OnInit {
       return;
     }
 
-    this.projectService.getByOwnerId(userId).subscribe({
+    this.projectService.getByOwnerOrAssignee(userId).subscribe({
       next: (projects) => {
         this.projects = projects;
       },

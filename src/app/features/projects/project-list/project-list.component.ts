@@ -7,6 +7,7 @@ import { Project } from '../../../shared/models/project.model';
 import { Page } from '../../../shared/models/page.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
+import { User } from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-project-list',
@@ -59,8 +60,7 @@ export class ProjectListComponent implements OnInit {
       return;
     }
 
-    
-    this.projectService.getByOwnerId(userId).subscribe({
+    this.projectService.getByOwnerOrAssignee(userId).subscribe({
       next: (projects) => {
         this.allProjects = projects;
         this.applyFiltersAndPagination();
@@ -197,6 +197,11 @@ export class ProjectListComponent implements OnInit {
 
   get endProjectIndex(): number {
     return Math.min((this.currentPage + 1) * this.pageSize, this.totalProjects);
+  }
+
+  isOwner(project: Project): boolean {
+    const userId = this.authService.getUserId();
+    return project.owner.id === userId;
   }
 
 }

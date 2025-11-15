@@ -94,8 +94,8 @@
 
         <div class="project-actions">
           <button class="btn-view" [routerLink]="['/projects', project.id]">👁️ Ver</button>
-          <button class="btn-edit" [routerLink]="['/projects/edit', project.id]">✏️ Editar</button>
-          <button class="btn-delete" (click)="deleteProject(project.id)">🗑️ Excluir</button>
+          <button class="btn-edit" *ngIf="isOwner(project)" [routerLink]="['/projects/edit', project.id]">✏️ Editar</button>
+          <button class="btn-delete" *ngIf="isOwner(project)" (click)="deleteProject(project.id)">🗑️ Excluir</button>
         </div>
       </div>
     </div>

@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
     this.isLoading = true;
     this.serviceUnavailable = false;
 
-    this.projectService.getByOwnerId(this.authService.getUserId()).subscribe({
+    this.projectService.getByOwnerOrAssignee(this.authService.getUserId()).subscribe({
       next: (projects) => {
         this.totalProjects = projects.length;
       },

@@ -30,11 +30,11 @@ export class ProjectService {
     return this.http.get<Page<Project>>(this.apiUrl, { params });
   }
 
-  getByOwnerId(ownerId: string | null): Observable<Project[]> {
-    if (!ownerId) {
-      throw new Error('Owner ID is required');
+  getByOwnerOrAssignee(userId: string | null): Observable<Project[]> {
+    if (!userId) {
+      throw new Error('User ID is required');
     }
-    return this.http.get<Project[]>(`${this.apiUrl}/owner/${ownerId}`);
+    return this.http.get<Project[]>(`${this.apiUrl}/user/${userId}`);
   }
 
   getById(id: string): Observable<Project> {
