@@ -20,7 +20,7 @@
           <p>Quadro Kanban</p>
         </div>
       </div>
-      <button class="btn-new-task" [routerLink]="['/tasks/new']">
+      <button class="btn-new-task" [routerLink]="['/tasks/new']" [queryParams]="{projectId: project?.id}">
         ➕ Nova Tarefa
       </button>
     </div>

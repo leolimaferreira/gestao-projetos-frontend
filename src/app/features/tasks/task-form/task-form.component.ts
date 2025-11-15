@@ -104,12 +104,39 @@ export class TaskFormComponent implements OnInit {
     this.projectService.getByOwnerOrAssignee(userId).subscribe({
       next: (projects) => {
         this.projects = projects;
+        // Se há um projectId nos queryParams, preencher após carregar os projetos
+        const projectId = this.route.snapshot.queryParamMap.get('projectId');
+        if (projectId && !this.isEditMode) {
+          this.preSelectProject(projectId);
+        }
       },
       error: (error) => {
         console.error('Erro ao carregar projetos:', error);
         this.errorMessage = 'Erro ao carregar projetos.';
       }
     });
+  }
+
+  private preSelectProject(projectId: string): void {
+    // Buscar o projeto pelo ID e preencher o nome no formulário
+    const project = this.projects.find(p => p.id === projectId);
+    if (project) {
+      this.taskForm.patchValue({
+        projectName: project.name
+      });
+    } else {
+      // Se não encontrou nos projetos carregados, buscar diretamente
+      this.projectService.getById(projectId).subscribe({
+        next: (project) => {
+          this.taskForm.patchValue({
+            projectName: project.name
+          });
+        },
+        error: (error) => {
+          console.error('Erro ao carregar projeto:', error);
+        }
+      });
+    }
   }
 
   private loadEmails(): void {
