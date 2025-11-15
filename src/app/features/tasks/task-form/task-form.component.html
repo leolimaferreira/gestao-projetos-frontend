@@ -1,7 +1,7 @@
 <div class="task-form-container">
   <div class="form-header">
     <h1>{{ isEditMode ? 'Editar Tarefa' : 'Nova Tarefa' }}</h1>
-    <button class="btn-back" routerLink="/tasks">← Voltar</button>
+    <button type="button" class="btn-back" (click)="goBack()">← Voltar</button>
   </div>
 
   <div class="error-alert" *ngIf="errorMessage">

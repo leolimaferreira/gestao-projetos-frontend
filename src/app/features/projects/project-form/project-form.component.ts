@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectService } from '../../../core/services/project.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
+import { NavigationService } from '../../../core/services/navigation.service';
 
 @Component({
   selector: 'app-project-form',
@@ -25,6 +26,7 @@ export class ProjectFormComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly navigationService = inject(NavigationService);
 
   projectForm: FormGroup;
   errorMessage = '';
@@ -149,7 +151,7 @@ export class ProjectFormComponent implements OnInit {
 
       request.subscribe({
         next: () => {
-          this.router.navigate(['/projects']);
+          this.navigateBack();
         },
         error: (error) => {
           this.errorMessage = error.error?.message || 'Erro ao salvar projeto.';
@@ -159,6 +161,41 @@ export class ProjectFormComponent implements OnInit {
           this.isLoading = false;
         }
       });
+    }
+  }
+
+  goBack(): void {
+    this.navigateBack();
+  }
+
+  private navigateBack(): void {
+    // Primeiro, verificar se há um returnUrl nos queryParams
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    
+    if (returnUrl) {
+      this.router.navigateByUrl(returnUrl);
+      return;
+    }
+    
+    // Fallback: usar o histórico de navegação
+    const previousUrl = this.navigationService.getPreviousUrl();
+    
+    if (previousUrl) {
+      // Se veio de algum detalhe de projeto (contém /projects/{id} mas não é /new ou /edit)
+      if (previousUrl.includes('/projects/') && !previousUrl.includes('/projects/new') && !previousUrl.includes('/projects/edit')) {
+        this.router.navigateByUrl(previousUrl);
+      }
+      // Se veio da lista de projetos
+      else if (previousUrl === '/projects' || previousUrl.includes('/projects?')) {
+        this.router.navigate(['/projects']);
+      }
+      // Qualquer outro caso, voltar para lista de projetos
+      else {
+        this.router.navigate(['/projects']);
+      }
+    } else {
+      // Fallback padrão
+      this.router.navigate(['/projects']);
     }
   }
 

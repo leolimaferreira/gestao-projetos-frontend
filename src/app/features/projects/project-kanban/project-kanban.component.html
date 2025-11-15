@@ -20,7 +20,7 @@
           <p>Quadro Kanban</p>
         </div>
       </div>
-      <button class="btn-new-task" [routerLink]="['/tasks/new']" [queryParams]="{projectId: project?.id}">
+      <button class="btn-new-task" [routerLink]="['/tasks/new']" [queryParams]="{projectId: project?.id, returnUrl: '/projects/' + project?.id + '/kanban'}">
         ➕ Nova Tarefa
       </button>
     </div>
@@ -30,7 +30,6 @@
     </div>
 
     <div class="kanban-board">
-      <!-- TODO Column -->
       <div 
         class="kanban-column todo-column"
         [class.drag-over]="draggedOverColumn === 'TODO'"
@@ -75,7 +74,6 @@
         </div>
       </div>
 
-      <!-- DOING Column -->
       <div 
         class="kanban-column doing-column"
         [class.drag-over]="draggedOverColumn === 'DOING'"
@@ -120,7 +118,6 @@
         </div>
       </div>
 
-      <!-- DONE Column -->
       <div 
         class="kanban-column done-column"
         [class.drag-over]="draggedOverColumn === 'DONE'"

@@ -6,6 +6,7 @@ import { TaskService } from '../../../core/services/task.service';
 import { ProjectService } from '../../../core/services/project.service';
 import { UserService } from '../../../core/services/user.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { NavigationService } from '../../../core/services/navigation.service';
 import { Project } from '../../../shared/models/project.model';
 
 @Component({
@@ -23,6 +24,7 @@ export class TaskFormComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly navigationService = inject(NavigationService);
 
   taskForm: FormGroup;
   errorMessage = '';
@@ -236,7 +238,7 @@ export class TaskFormComponent implements OnInit {
 
       request.subscribe({
         next: () => {
-          this.router.navigate(['/tasks']);
+          this.navigateBack();
         },
         error: (error) => {
           console.error('Erro ao salvar tarefa:', error);
@@ -249,6 +251,37 @@ export class TaskFormComponent implements OnInit {
       });
     } else {
       this.markFormGroupTouched(this.taskForm);
+    }
+  }
+
+  goBack(): void {
+    this.navigateBack();
+  }
+
+  private navigateBack(): void {
+    // Primeiro, verificar se há um returnUrl nos queryParams
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    
+    if (returnUrl) {
+      this.router.navigateByUrl(returnUrl);
+      return;
+    }
+    
+    // Fallback: usar o histórico de navegação
+    const previousUrl = this.navigationService.getPreviousUrl();
+    
+    if (previousUrl) {
+      if (previousUrl.includes('/kanban')) {
+        this.router.navigateByUrl(previousUrl);
+      }
+      else if (previousUrl.includes('/tasks') && !previousUrl.includes('/tasks/new') && !previousUrl.includes('/tasks/edit')) {
+        this.router.navigate(['/tasks']);
+      }
+      else {
+        this.router.navigate(['/tasks']);
+      }
+    } else {
+      this.router.navigate(['/tasks']);
     }
   }
 
