@@ -48,8 +48,7 @@
             draggable="true"
             (dragstart)="onDragStart(task, $event)"
             (dragend)="onDragEnd($event)"
-            (click)="$event.preventDefault()"
-            [routerLink]="['/tasks', task.id]">
+            (click)="navigateToTask(task.id)">
             <div class="card-header">
               <h3>{{ task.title }}</h3>
               <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
@@ -92,8 +91,7 @@
             draggable="true"
             (dragstart)="onDragStart(task, $event)"
             (dragend)="onDragEnd($event)"
-            (click)="$event.preventDefault()"
-            [routerLink]="['/tasks', task.id]">
+            (click)="navigateToTask(task.id)">
             <div class="card-header">
               <h3>{{ task.title }}</h3>
               <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
@@ -136,8 +134,7 @@
             draggable="true"
             (dragstart)="onDragStart(task, $event)"
             (dragend)="onDragEnd($event)"
-            (click)="$event.preventDefault()"
-            [routerLink]="['/tasks', task.id]">
+            (click)="navigateToTask(task.id)">
             <div class="card-header">
               <h3>{{ task.title }}</h3>
               <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">

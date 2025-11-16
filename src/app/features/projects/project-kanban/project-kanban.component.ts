@@ -122,7 +122,6 @@ export class ProjectKanbanComponent implements OnInit {
     }
   }
 
-  // Drag and Drop handlers
   onDragStart(task: Task, event: DragEvent): void {
     this.draggedTask = task;
     if (event.dataTransfer) {
@@ -152,7 +151,6 @@ export class ProjectKanbanComponent implements OnInit {
     const target = event.target as HTMLElement;
     const relatedTarget = event.relatedTarget as HTMLElement;
     
-    // Only remove highlight if we're leaving the column entirely
     if (!target.contains(relatedTarget)) {
       this.draggedOverColumn = null;
     }
@@ -166,5 +164,15 @@ export class ProjectKanbanComponent implements OnInit {
       this.updateTaskStatus(this.draggedTask, newStatus);
     }
     this.draggedTask = null;
+  }
+
+  navigateToTask(taskId: string): void {
+    if (this.project) {
+      this.router.navigate(['/tasks', taskId], {
+        queryParams: { returnUrl: `/projects/${this.project.id}/kanban` }
+      });
+    } else {
+      this.router.navigate(['/tasks', taskId]);
+    }
   }
 }

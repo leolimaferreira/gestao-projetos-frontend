@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TaskService } from '../../../core/services/task.service';
 import { Task } from '../../../shared/models/task.model';
 import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
+import { NavigationService } from '../../../core/services/navigation.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -16,6 +17,7 @@ export class TaskDetailComponent implements OnInit {
   private readonly taskService = inject(TaskService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
 
   task: Task | null = null;
   isLoading = true;
@@ -104,5 +106,21 @@ export class TaskDetailComponent implements OnInit {
       'HIGH': 'priority-high'
     };
     return classes[priority] || '';
+  }
+
+  goBack(): void {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    
+    if (returnUrl) {
+      this.router.navigateByUrl(returnUrl);
+      return;
+    }
+
+    const previousUrl = this.navigationService.getPreviousUrl();
+    if (previousUrl && previousUrl !== '/tasks/' + this.task?.id) {
+      this.router.navigateByUrl(previousUrl);
+    } else {
+      this.router.navigate(['/tasks']);
+    }
   }
 }
