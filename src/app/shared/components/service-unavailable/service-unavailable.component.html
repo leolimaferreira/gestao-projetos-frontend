@@ -1,9 +1,14 @@
 <div class="service-unavailable">
-  <div class="error-icon">⚠️</div>
-  <h2>Serviço Temporariamente Indisponível</h2>
-  <p>{{ message }}</p>
-  <p class="sub-message">Agradecemos pela compreensão.</p>
-  <button class="btn-retry" (click)="onRetry()">
-    🔄 Tentar Novamente
-  </button>
+  <div class="error-card">
+    <div class="error-icon-container">
+      <div class="error-icon">⚠️</div>
+    </div>
+    <h2>Serviço Temporariamente Indisponível</h2>
+    <p>{{ message }}</p>
+    <p class="sub-message">Agradecemos pela compreensão.</p>
+    <button class="btn-retry" (click)="onRetry()">
+      <span>🔄</span>
+      <span>Tentar Novamente</span>
+    </button>
+  </div>
 </div>
