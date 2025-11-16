@@ -15,7 +15,7 @@
       <div class="header-content">
         <h1>{{ task.title }}</h1>
         <div class="header-actions">
-          <button class="btn-edit" [routerLink]="['/tasks/edit', task.id]">
+          <button type="button" class="btn-edit" (click)="editTask()">
             ✏️ Editar
           </button>
           <button class="btn-delete" (click)="deleteTask()">

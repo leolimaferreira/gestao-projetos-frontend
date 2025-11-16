@@ -123,4 +123,18 @@ export class TaskDetailComponent implements OnInit {
       this.router.navigate(['/tasks']);
     }
   }
+
+  editTask(): void {
+    if (!this.task) return;
+    
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    
+    if (returnUrl) {
+      this.router.navigate(['/tasks/edit', this.task.id], {
+        queryParams: { returnUrl }
+      });
+    } else {
+      this.router.navigate(['/tasks/edit', this.task.id]);
+    }
+  }
 }
