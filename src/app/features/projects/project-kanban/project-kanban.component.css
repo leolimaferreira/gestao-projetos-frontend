@@ -35,6 +35,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
 }
 
 .kanban-header::before {
@@ -67,6 +69,8 @@
   gap: var(--space-lg);
   position: relative;
   z-index: 1;
+  flex: 1;
+  min-width: 0; /* Permite que o texto quebre quando necessário */
 }
 
 .btn-back {
@@ -98,6 +102,7 @@
   color: var(--neutral-0);
   font-weight: var(--font-weight-bold);
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  word-break: break-word;
 }
 
 .project-info p {
@@ -137,7 +142,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-xl);
   padding: var(--space-xl);
-  min-height: 600px;
+  min-height: 500px;
+  align-items: start; /* Evita que colunas estichem desnecessariamente */
 }
 
 /* Columns */
@@ -206,6 +212,8 @@
   flex-direction: column;
   gap: var(--space-md);
   padding: var(--space-xs);
+  max-height: 600px; /* Limita altura no desktop */
+  min-height: 200px; /* Altura mínima para não ficar muito pequeno */
 }
 
 .column-content::-webkit-scrollbar {
@@ -396,32 +404,75 @@
   color: #C62828;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+/* Responsive - Tablets e monitores pequenos */
+@media (max-width: 1200px) {
   .kanban-board {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
   }
   
-  .kanban-column {
-    min-height: 400px;
+  .done-column {
+    grid-column: 1 / -1; /* Coluna "Concluído" ocupa toda a largura */
   }
 }
 
+@media (max-width: 1024px) {
+  .kanban-header {
+    padding: var(--space-xl) var(--space-lg);
+  }
+  
+  .header-left {
+    gap: var(--space-md);
+  }
+
+  .kanban-board {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+  }
+  
+  .done-column {
+    grid-column: auto; /* Reseta para mobile */
+  }
+  
+  .kanban-column {
+    min-height: auto;
+    max-height: 500px;
+  }
+  
+  .column-content {
+    max-height: 380px;
+  }
+}
+
+/* Tablet portrait */
 @media (max-width: 768px) {
   .kanban-header {
-    padding: var(--space-xl) var(--space-md);
+    padding: var(--space-lg) var(--space-md);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
   }
 
   .kanban-header::before,
   .kanban-header::after {
     display: none;
   }
+
+  .project-info h1 {
+    font-size: var(--font-size-xl);
+  }
   
   .header-left {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
     gap: var(--space-md);
+    width: 100%;
+  }
+
+  .btn-back {
+    padding: var(--space-sm) var(--space-md);
+    white-space: nowrap;
   }
   
   .btn-new-task {
@@ -431,13 +482,94 @@
 
   .kanban-board {
     padding: var(--space-md);
+    gap: var(--space-md);
   }
 
   .kanban-column {
     padding: var(--space-md);
+    max-height: 450px;
+  }
+  
+  .column-content {
+    max-height: 330px;
+  }
+
+  .column-header h2 {
+    font-size: var(--font-size-md);
   }
 
   .kanban-card {
     padding: var(--space-md);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .kanban-header {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .project-info h1 {
+    font-size: var(--font-size-lg);
+  }
+  
+  .header-left {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+  }
+  
+  .btn-back {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .kanban-board {
+    padding: var(--space-sm);
+    gap: var(--space-sm);
+  }
+
+  .kanban-column {
+    padding: var(--space-sm);
+    max-height: 400px;
+  }
+  
+  .column-content {
+    max-height: 280px;
+  }
+
+  .column-header {
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .column-header h2 {
+    font-size: var(--font-size-sm);
+  }
+
+  .task-count {
+    padding: 4px 12px;
+    font-size: 12px;
+    min-width: 28px;
+  }
+
+  .kanban-card {
+    padding: var(--space-sm);
+    gap: var(--space-sm);
+  }
+
+  .card-header h4 {
+    font-size: var(--font-size-sm);
+  }
+
+  .card-badges {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .badge,
+  .priority-badge {
+    font-size: 10px;
+    padding: 3px 8px;
   }
 }

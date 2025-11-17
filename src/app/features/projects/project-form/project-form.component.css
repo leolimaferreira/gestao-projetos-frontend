@@ -411,6 +411,20 @@
   color: var(--neutral-500);
 }
 
+/* Tablet landscape */
+@media (max-width: 1024px) {
+  .header {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .form-card {
+    max-width: 100%;
+    margin-left: var(--space-lg);
+    margin-right: var(--space-lg);
+  }
+}
+
+/* Tablet portrait */
 @media (max-width: 768px) {
   .form-container {
     padding: 0;
@@ -440,7 +454,7 @@
   .form-card {
     padding: var(--space-xl) var(--space-md);
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    margin-bottom: 0;
+    margin: 0 auto var(--space-xl);
   }
 
   .form-row {
@@ -459,5 +473,44 @@
 
   .toggle-container {
     padding: var(--space-md);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .header h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .form-card {
+    padding: var(--space-lg) var(--space-sm);
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+  }
+
+  .form-group label {
+    font-size: var(--font-size-xs);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: var(--font-size-sm);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .toggle-container {
+    padding: var(--space-sm);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    font-size: var(--font-size-sm);
+    padding: var(--space-sm) var(--space-lg);
   }
 }

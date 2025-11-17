@@ -136,12 +136,35 @@
   text-decoration: underline;
 }
 
+/* Tablet */
+@media (max-width: 768px) {
+  .register-card {
+    max-width: 90%;
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  .register-header h1 {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* Mobile */
 @media (max-width: 480px) {
   .register-card {
+    max-width: 95%;
     padding: var(--space-xl) var(--space-lg);
+    margin: var(--space-md);
   }
 
   .register-header h1 {
     font-size: var(--font-size-lg);
+  }
+
+  .form-group input {
+    font-size: var(--font-size-sm);
+  }
+
+  .btn-register {
+    font-size: var(--font-size-sm);
   }
 }

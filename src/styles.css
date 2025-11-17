@@ -140,3 +140,80 @@ input, select, textarea {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--neutral-500);
 }
+
+/* Responsividade Global */
+
+/* Tablets em landscape (1024px - 1280px) */
+@media (max-width: 1280px) {
+  :root {
+    --font-size-2xl: 22px;
+    --font-size-3xl: 26px;
+  }
+}
+
+/* Tablets em portrait (768px - 1024px) */
+@media (max-width: 1024px) {
+  :root {
+    --font-size-xl: 18px;
+    --font-size-2xl: 20px;
+    --font-size-3xl: 24px;
+    --space-2xl: 28px;
+  }
+
+  body {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Mobile landscape e tablets pequenos (481px - 768px) */
+@media (max-width: 768px) {
+  :root {
+    --font-size-md: 13px;
+    --font-size-lg: 15px;
+    --font-size-xl: 17px;
+    --font-size-2xl: 19px;
+    --font-size-3xl: 22px;
+    --space-lg: 14px;
+    --space-xl: 20px;
+    --space-2xl: 24px;
+  }
+}
+
+/* Mobile portrait (até 480px) */
+@media (max-width: 480px) {
+  :root {
+    --font-size-xs: 10px;
+    --font-size-sm: 11px;
+    --font-size-md: 12px;
+    --font-size-lg: 14px;
+    --font-size-xl: 16px;
+    --font-size-2xl: 18px;
+    --font-size-3xl: 20px;
+    --space-xs: 3px;
+    --space-sm: 6px;
+    --space-md: 10px;
+    --space-lg: 12px;
+    --space-xl: 16px;
+    --space-2xl: 20px;
+  }
+
+  body {
+    font-size: 12px;
+  }
+}
+
+/* Muito pequeno (até 375px) - iPhones pequenos */
+@media (max-width: 375px) {
+  :root {
+    --space-xl: 14px;
+    --space-2xl: 18px;
+  }
+}
+
+/* Landscape em mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  :root {
+    --space-xl: 12px;
+    --space-2xl: 16px;
+  }
+}

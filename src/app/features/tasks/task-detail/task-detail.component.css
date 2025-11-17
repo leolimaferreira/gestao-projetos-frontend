@@ -370,6 +370,26 @@
   line-height: 1.6;
 }
 
+/* Tablet landscape */
+@media (max-width: 1024px) {
+  .header {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .detail-content {
+    padding: 0 var(--space-lg) var(--space-2xl);
+  }
+
+  .badges-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dates-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablet portrait */
 @media (max-width: 768px) {
   .task-detail-container::before,
   .task-detail-container::after {
@@ -393,6 +413,7 @@
     width: 100%;
     justify-content: flex-start;
     gap: var(--space-sm);
+    flex-wrap: wrap;
   }
 
   .btn-edit,
@@ -425,5 +446,63 @@
 
   .info-section h3 {
     font-size: var(--font-size-lg);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .header h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .header-actions {
+    flex-direction: column;
+  }
+
+  .header-actions button {
+    width: 100%;
+  }
+
+  .detail-content {
+    padding: 0 var(--space-sm) var(--space-lg);
+  }
+
+  .detail-card {
+    padding: var(--space-md);
+  }
+
+  .badge-item {
+    padding: var(--space-md);
+  }
+
+  .badge-label {
+    font-size: 10px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .info-section {
+    padding: var(--space-md);
+  }
+
+  .info-section h3 {
+    font-size: var(--font-size-md);
+  }
+
+  .info-item {
+    padding: var(--space-md);
+  }
+
+  .info-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
   }
 }

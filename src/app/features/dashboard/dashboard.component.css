@@ -319,6 +319,29 @@
   line-height: 1.6;
 }
 
+/* Tablet landscape e monitores pequenos */
+@media (max-width: 1024px) {
+  .header-content {
+    max-width: 100%;
+    padding: 0 var(--space-md);
+  }
+
+  .content {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+/* Tablet portrait */
 @media (max-width: 768px) {
   .header {
     padding: var(--space-xl) var(--space-md);
@@ -328,6 +351,10 @@
     flex-direction: column;
     gap: var(--space-lg);
     align-items: flex-start;
+  }
+
+  .header h1 {
+    font-size: var(--font-size-xl);
   }
 
   .btn-logout {
@@ -368,5 +395,55 @@
 
   .action-icon {
     font-size: 48px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .header h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .content {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .stat-card {
+    padding: var(--space-lg);
+  }
+
+  .stat-icon {
+    font-size: 40px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .stat-info h3 {
+    font-size: 28px;
+  }
+
+  .stat-info p {
+    font-size: var(--font-size-xs);
+  }
+
+  .action-card {
+    min-height: 160px;
+    padding: var(--space-lg);
+  }
+
+  .action-icon {
+    font-size: 40px;
+  }
+
+  .action-card h3 {
+    font-size: var(--font-size-md);
+  }
+
+  .action-card p {
+    font-size: var(--font-size-xs);
   }
 }
