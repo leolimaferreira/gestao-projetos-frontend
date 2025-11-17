@@ -18,6 +18,7 @@ export class TranslationService {
     'Access denied': 'Acesso negado',
     'Authentication failed': 'Falha na autenticação',
     'Invalid token': 'Token inválido',
+    'There is already a user with this email.': 'Já existe um usuário com este email',
     
     'Project not found': 'Projeto não encontrado',
     'Error creating project': 'Erro ao criar projeto',
@@ -27,6 +28,9 @@ export class TranslationService {
     'You do not have permission to access this project': 'Você não tem permissão para acessar este projeto',
     'Project name is required': 'Nome do projeto é obrigatório',
     'Project description is required': 'Descrição do projeto é obrigatória',
+    'Project cannot have more than 5 high priority tasks': 'Projeto não pode ter mais de 5 tarefas de alta prioridade',
+    'High priority tasks must have a description': 'Tarefas de alta prioridade devem ter uma descrição',
+    'Project has already ended': 'O projeto já foi concluído',
     
     'Task not found': 'Tarefa não encontrada',
     'Error creating task': 'Erro ao criar tarefa',
@@ -34,9 +38,11 @@ export class TranslationService {
     'Error deleting task': 'Erro ao deletar tarefa',
     'Task title already exists': 'Título da tarefa já existe',
     'Task title is required': 'Título da tarefa é obrigatório',
-    'You can only change the status of a task to DOING if it is in status TODO.': 'Você só pode alterar o status de uma tarefa para EM PROGRESSO se ela estiver no status A FAZER.',
-    'You cannot update a task to DONE less than 30 minutes after its creation': 'Você não pode atualizar uma tarefa para CONCLUÍDA em menos de 30 minutos após sua criação.',
-    'You can only change the status of a task to DONE if it is in status DOING.': 'Você só pode alterar o status de uma tarefa para CONCLUÍDA se ela estiver no status EM PROGRESSO.',
+    'You can only change the status of a task to DOING if it is in status TODO.': 'Você só pode alterar o status de uma tarefa para EM PROGRESSO se ela estiver no status A FAZER',
+    'You cannot update a task to DONE less than 30 minutes after its creation': 'Você não pode atualizar uma tarefa para CONCLUÍDA em menos de 30 minutos após sua criação',
+    'You can only change the status of a task to DONE if it is in status DOING.': 'Você só pode alterar o status de uma tarefa para CONCLUÍDA se ela estiver no status EM PROGRESSO',
+    'Task due date cannot be before project start date': 'A data de vencimento da tarefa não pode ser anterior à data de início do projeto',
+    'Task due date cannot be after project end date': 'A data de vencimento da tarefa não pode ser posterior à data de término do projeto',
     
     'Error loading users': 'Erro ao carregar usuários',
     'User without permission': 'Usuário sem permissão',
