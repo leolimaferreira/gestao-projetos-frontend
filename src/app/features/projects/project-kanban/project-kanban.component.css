@@ -7,11 +7,18 @@
 }
 
 .loading {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
   padding: 80px 20px;
   font-size: 18px;
   color: var(--neutral-600);
   font-weight: var(--font-weight-medium);
+}
+
+.loading ng-icon {
+  color: #667eea;
 }
 
 .error-alert {
@@ -23,6 +30,9 @@
   border: 2px solid #fcc;
   box-shadow: 0 4px 12px rgba(204, 51, 51, 0.15);
   font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 /* Header */
@@ -235,7 +245,10 @@
 }
 
 .empty-column {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
   padding: var(--space-2xl) var(--space-lg);
   color: var(--neutral-400);
   font-style: italic;
@@ -243,6 +256,11 @@
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease;
+}
+
+.empty-column ng-icon {
+  color: #667eea;
+  opacity: 0.5;
 }
 
 /* Kanban Cards */
@@ -367,9 +385,8 @@
   font-weight: var(--font-weight-medium);
 }
 
-.info-icon {
-  font-size: 14px;
-  opacity: 0.7;
+.card-info ng-icon {
+  color: #667eea;
 }
 
 /* Priority Badges */

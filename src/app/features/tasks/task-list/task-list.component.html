@@ -4,10 +4,12 @@
       <h1>Tarefas</h1>
       <div class="header-actions">
         <button class="btn-secondary" routerLink="/dashboard">
-          ← Voltar
+          <ng-icon name="heroArrowLeft" size="18"></ng-icon>
+          Voltar
         </button>
         <button class="btn-primary" routerLink="/tasks/new">
-          + Nova Tarefa
+          <ng-icon name="heroPlus" size="18"></ng-icon>
+          Nova Tarefa
         </button>
       </div>
     </div>
@@ -15,10 +17,16 @@
 
   <div class="content">
     <div class="filters-card">
-      <h3>Filtros</h3>
+      <h3>
+        <ng-icon name="heroFunnel" size="20"></ng-icon>
+        Filtros
+      </h3>
       <div class="filters-grid">
         <div class="filter-group">
-          <label for="title">Título</label>
+          <label for="title">
+            <ng-icon name="heroMagnifyingGlass" size="16"></ng-icon>
+            Título
+          </label>
           <input
             type="text"
             id="title"
@@ -28,7 +36,10 @@
         </div>
 
         <div class="filter-group">
-          <label for="projectName">Projeto</label>
+          <label for="projectName">
+            <ng-icon name="heroDocumentText" size="16"></ng-icon>
+            Projeto
+          </label>
           <input
             type="text"
             id="projectName"
@@ -38,7 +49,10 @@
         </div>
 
         <div class="filter-group">
-          <label for="status">Status</label>
+          <label for="status">
+            <ng-icon name="heroCheckCircle" size="16"></ng-icon>
+            Status
+          </label>
           <select id="status" [(ngModel)]="filters.status">
             <option value="">Todos</option>
             <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
@@ -46,7 +60,10 @@
         </div>
 
         <div class="filter-group">
-          <label for="priority">Prioridade</label>
+          <label for="priority">
+            <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
+            Prioridade
+          </label>
           <select id="priority" [(ngModel)]="filters.priority">
             <option value="">Todas</option>
             <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
@@ -55,16 +72,24 @@
       </div>
 
       <div class="filter-actions">
-        <button class="btn-filter" (click)="applyFilters()">Aplicar Filtros</button>
-        <button class="btn-clear" (click)="clearFilters()">Limpar</button>
+        <button class="btn-filter" (click)="applyFilters()">
+          <ng-icon name="heroFunnel" size="16"></ng-icon>
+          Aplicar Filtros
+        </button>
+        <button class="btn-clear" (click)="clearFilters()">
+          <ng-icon name="heroXMark" size="16"></ng-icon>
+          Limpar
+        </button>
       </div>
     </div>
 
     <div class="error-alert" *ngIf="errorMessage">
+      <ng-icon name="heroExclamationCircle" size="20"></ng-icon>
       {{ errorMessage }}
     </div>
 
     <div class="loading" *ngIf="isLoading">
+      <ng-icon name="heroArrowPath" size="32" class="spin-icon"></ng-icon>
       <p>Carregando tarefas...</p>
     </div>
 
@@ -72,7 +97,10 @@
       <div class="task-card" *ngFor="let task of tasks">
         <div class="task-header">
           <div class="task-title-row">
-            <h3>{{ task.title }}</h3>
+            <h3>
+              <ng-icon name="heroCheckCircle" size="20"></ng-icon>
+              {{ task.title }}
+            </h3>
             <div class="task-badges">
               <span class="badge" [ngClass]="getStatusClass(task.status)">
                 {{ task.status }}
@@ -82,38 +110,60 @@
               </span>
             </div>
           </div>
-          <p class="task-project">Projeto: {{ task.project.name }}</p>
+          <p class="task-project">
+            <ng-icon name="heroDocumentText" size="14"></ng-icon>
+            Projeto: {{ task.project.name }}
+          </p>
         </div>
 
         <p class="task-description">{{ task.description }}</p>
 
         <div class="task-info">
           <div class="info-item">
+            <ng-icon name="heroCheckCircle" size="16"></ng-icon>
             <span class="info-label">Responsável:</span>
             <span>{{ task.assignee.name }}</span>
           </div>
           <div class="info-item">
+            <ng-icon name="heroCalendar" size="16"></ng-icon>
             <span class="info-label">Prazo:</span>
             <span>{{ task.dueDate | date: 'dd/MM/yyyy' }}</span>
           </div>
         </div>
 
         <div class="task-actions">
-          <button class="btn-view" [routerLink]="['/tasks', task.id]">👁️ Ver</button>
-          <button class="btn-edit" [routerLink]="['/tasks/edit', task.id]">✏️ Editar</button>
-          <button class="btn-delete" (click)="deleteTask(task.id)">🗑️ Excluir</button>
+          <button class="btn-view" [routerLink]="['/tasks', task.id]">
+            <ng-icon name="heroEye" size="16"></ng-icon>
+            Ver
+          </button>
+          <button class="btn-edit" [routerLink]="['/tasks/edit', task.id]">
+            <ng-icon name="heroPlus" size="16"></ng-icon>
+            Editar
+          </button>
+          <button class="btn-delete" (click)="deleteTask(task.id)">
+            <ng-icon name="heroXMark" size="16"></ng-icon>
+            Excluir
+          </button>
         </div>
       </div>
     </div>
 
     <div class="empty-state" *ngIf="!isLoading && tasks.length === 0 && allTasks.length === 0">
+      <ng-icon name="heroCheckCircle" size="48"></ng-icon>
       <p>Nenhuma tarefa encontrada.</p>
-      <button class="btn-primary" routerLink="/tasks/new">Criar Nova Tarefa</button>
+      <button class="btn-primary" routerLink="/tasks/new">
+        <ng-icon name="heroPlus" size="18"></ng-icon>
+        Criar Nova Tarefa
+      </button>
     </div>
 
     <div class="empty-state" *ngIf="!isLoading && tasks.length === 0 && allTasks.length > 0">
+      <ng-icon name="heroMagnifyingGlass" size="48"></ng-icon>
       <p>Nenhuma tarefa encontrada com os filtros aplicados.</p>
-      <button class="btn-secondary" (click)="clearFilters()">Limpar Filtros</button>
+      <button class="btn-secondary" (click)="clearFilters()">
+        <ng-icon name="heroXMark" size="18"></ng-icon>
+        Limpar Filtros
+      </button>
     </div>
 
     <div class="pagination" *ngIf="!isLoading && totalPages > 1">
@@ -121,7 +171,8 @@
         class="pagination-btn" 
         [disabled]="currentPage === 0" 
         (click)="previousPage()">
-        ← Anterior
+        <ng-icon name="heroChevronLeft" size="18"></ng-icon>
+        Anterior
       </button>
 
       <div class="pagination-numbers">
@@ -138,7 +189,8 @@
         class="pagination-btn" 
         [disabled]="currentPage === totalPages - 1" 
         (click)="nextPage()">
-        Próxima →
+        Próxima
+        <ng-icon name="heroChevronRight" size="18"></ng-icon>
       </button>
 
       <div class="pagination-info">

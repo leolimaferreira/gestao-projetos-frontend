@@ -5,7 +5,10 @@
         <h1>Dashboard</h1>
         <p class="welcome">Bem-vindo, {{ userName }}!</p>
       </div>
-      <button class="btn-logout" (click)="logout()">Sair</button>
+      <button class="btn-logout" (click)="logout()">
+        <ng-icon name="heroArrowRightOnRectangle" size="18"></ng-icon>
+        Sair
+      </button>
     </div>
   </div>
 
@@ -17,26 +20,37 @@
     ></app-service-unavailable>
 
     <div class="loading" *ngIf="isLoading">
+      <ng-icon name="heroArrowPath" size="32" class="spin-icon"></ng-icon>
       <p>Carregando dados...</p>
     </div>
 
     <div class="stats-grid" *ngIf="!isLoading && !serviceUnavailable">
       <div class="stat-card projects">
-        <div class="stat-icon">📁</div>
+        <div class="stat-icon">
+          <ng-icon name="heroFolderOpen" size="32"></ng-icon>
+        </div>
         <div class="stat-info">
           <h3>{{ totalProjects }}</h3>
           <p>Seus Projetos</p>
         </div>
-        <a routerLink="/projects" class="stat-link">Ver todos</a>
+        <a routerLink="/projects" class="stat-link">
+          Ver todos
+          <ng-icon name="heroArrowRight" size="16"></ng-icon>
+        </a>
       </div>
 
       <div class="stat-card tasks">
-        <div class="stat-icon">✓</div>
+        <div class="stat-icon">
+          <ng-icon name="heroCheckCircle" size="32"></ng-icon>
+        </div>
         <div class="stat-info">
           <h3>{{ totalTasks }}</h3>
           <p>Suas Tarefas</p>
         </div>
-        <a routerLink="/tasks" class="stat-link">Ver todas</a>
+        <a routerLink="/tasks" class="stat-link">
+          Ver todas
+          <ng-icon name="heroArrowRight" size="16"></ng-icon>
+        </a>
       </div>
     </div>
 
@@ -44,19 +58,25 @@
       <h2>Ações Rápidas</h2>
       <div class="actions-grid">
         <button class="action-card" routerLink="/projects/new">
-          <div class="action-icon">➕</div>
+          <div class="action-icon">
+            <ng-icon name="heroPlusCircle" size="32"></ng-icon>
+          </div>
           <h3>Novo Projeto</h3>
           <p>Criar um novo projeto</p>
         </button>
 
         <button class="action-card" routerLink="/tasks/new">
-          <div class="action-icon">📝</div>
+          <div class="action-icon">
+            <ng-icon name="heroDocumentText" size="32"></ng-icon>
+          </div>
           <h3>Nova Tarefa</h3>
           <p>Adicionar uma tarefa</p>
         </button>
 
         <button class="action-card" routerLink="/projects">
-          <div class="action-icon">📋</div>
+          <div class="action-icon">
+            <ng-icon name="heroSquares2x2" size="32"></ng-icon>
+          </div>
           <h3>Projetos</h3>
           <p>Gerenciar projetos</p>
         </button>

@@ -8,13 +8,46 @@ import { Page } from '../../../shared/models/page.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../shared/models/user.model';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroArrowLeft,
+  heroPlus,
+  heroMagnifyingGlass,
+  heroFunnel,
+  heroXMark,
+  heroArrowPath,
+  heroExclamationCircle,
+  heroFolderOpen,
+  heroUser,
+  heroCalendar,
+  heroChevronLeft,
+  heroChevronRight,
+  heroEye
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, NgIconComponent],
   templateUrl: './project-list.component.html',
-  styleUrl: './project-list.component.css'
+  styleUrl: './project-list.component.css',
+  viewProviders: [
+    provideIcons({
+      heroArrowLeft,
+      heroPlus,
+      heroMagnifyingGlass,
+      heroFunnel,
+      heroXMark,
+      heroArrowPath,
+      heroExclamationCircle,
+      heroFolderOpen,
+      heroUser,
+      heroCalendar,
+      heroChevronLeft,
+      heroChevronRight,
+      heroEye
+    })
+  ]
 })
 export class ProjectListComponent implements OnInit {
   private readonly projectService = inject(ProjectService);

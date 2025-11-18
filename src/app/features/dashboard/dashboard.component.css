@@ -65,13 +65,16 @@
   background: rgba(255, 255, 255, 0.15);
   color: var(--neutral-0);
   border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: var(--space-sm) var(--space-xl);
+  padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-lg);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .btn-logout:hover {
@@ -79,6 +82,36 @@
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+.loading {
+  text-align: center;
+  padding: 60px var(--space-md);
+  color: var(--neutral-600);
+  font-size: var(--font-size-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .content {
@@ -148,8 +181,6 @@
 }
 
 .stat-icon {
-  font-size: 64px;
-  line-height: 1;
   flex-shrink: 0;
   width: 80px;
   height: 80px;
@@ -158,11 +189,17 @@
   justify-content: center;
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
+  color: var(--neutral-0);
 }
 
 .stat-card.projects .stat-icon {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.stat-card.tasks .stat-icon {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
 }
 
 .stat-card.tasks .stat-icon {
@@ -208,17 +245,14 @@
   position: relative;
 }
 
-.stat-link::after {
-  content: '→';
-  transition: transform 0.2s ease;
+.stat-link:hover {
+  color: #667eea;
+  gap: var(--space-sm);
 }
 
 .stat-link:hover {
-  color: var(--primary-blue-hover);
-}
-
-.stat-link:hover::after {
-  transform: translateX(4px);
+  color: #667eea;
+  gap: var(--space-sm);
 }
 
 .quick-actions {
@@ -293,16 +327,23 @@
 }
 
 .action-icon {
-  font-size: 56px;
-  line-height: 1;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
   margin-bottom: var(--space-sm);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: grayscale(0.3);
+  color: #667eea;
 }
 
 .action-card:hover .action-icon {
-  filter: grayscale(0);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--neutral-0);
   transform: scale(1.15) rotate(-5deg);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
 .action-card h3 {

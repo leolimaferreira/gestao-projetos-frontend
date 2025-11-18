@@ -40,6 +40,9 @@
 }
 
 .form-header h1 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   margin: 0;
   color: var(--neutral-0);
   font-size: var(--font-size-2xl);
@@ -48,6 +51,9 @@
 }
 
 .btn-back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   padding: var(--space-sm) var(--space-xl);
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -67,6 +73,9 @@
 }
 
 .error-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
   border: 2px solid #EF4444;
   color: #991B1B;
@@ -98,7 +107,9 @@
 }
 
 .form-group label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   margin-bottom: var(--space-sm);
   color: var(--neutral-900);
   font-weight: 600;
@@ -161,7 +172,9 @@
 }
 
 .error-message {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   color: #EF4444;
   font-size: var(--font-size-sm);
   margin-top: var(--space-xs);
@@ -203,6 +216,9 @@
 }
 
 .suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   padding: var(--space-md) var(--space-lg);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -332,6 +348,9 @@
 }
 
 .btn-cancel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   padding: var(--space-md) var(--space-2xl);
   background: var(--neutral-100);
   color: var(--neutral-700);
@@ -351,6 +370,9 @@
 }
 
 .btn-submit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   padding: var(--space-md) var(--space-2xl);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: var(--neutral-0);

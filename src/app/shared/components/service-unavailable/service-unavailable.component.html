@@ -1,14 +1,18 @@
 <div class="service-unavailable">
   <div class="error-card">
-    <div class="error-icon-container">
-      <div class="error-icon">⚠️</div>
+    <div class="icon-wrapper">
+      <ng-icon name="heroExclamationTriangle" size="56"></ng-icon>
     </div>
+    
     <h2>Serviço Temporariamente Indisponível</h2>
-    <p>{{ message }}</p>
+    
+    <p class="message">{{ message }}</p>
+    
     <p class="sub-message">Agradecemos pela compreensão.</p>
+    
     <button class="btn-retry" (click)="onRetry()">
-      <span>🔄</span>
-      <span>Tentar Novamente</span>
+      <ng-icon name="heroArrowPath" size="20"></ng-icon>
+      Tentar Novamente
     </button>
   </div>
 </div>

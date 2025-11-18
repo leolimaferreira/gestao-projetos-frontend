@@ -1,6 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroArrowLeft,
+  heroPlus,
+  heroClipboardDocumentList,
+  heroCog,
+  heroCheckCircle,
+  heroUser,
+  heroCalendar,
+  heroExclamationCircle,
+  heroArrowPath,
+  heroInboxArrowDown
+} from '@ng-icons/heroicons/outline';
 import { TaskService } from '../../../core/services/task.service';
 import { ProjectService } from '../../../core/services/project.service';
 import { Task } from '../../../shared/models/task.model';
@@ -10,9 +23,23 @@ import { ServiceUnavailableComponent } from '../../../shared/components/service-
 @Component({
   selector: 'app-project-kanban',
   standalone: true,
-  imports: [CommonModule, RouterLink, ServiceUnavailableComponent],
+  imports: [CommonModule, RouterLink, ServiceUnavailableComponent, NgIconComponent],
   templateUrl: './project-kanban.component.html',
-  styleUrl: './project-kanban.component.css'
+  styleUrl: './project-kanban.component.css',
+  viewProviders: [
+    provideIcons({
+      heroArrowLeft,
+      heroPlus,
+      heroClipboardDocumentList,
+      heroCog,
+      heroCheckCircle,
+      heroUser,
+      heroCalendar,
+      heroExclamationCircle,
+      heroArrowPath,
+      heroInboxArrowDown
+    })
+  ]
 })
 export class ProjectKanbanComponent implements OnInit {
   private readonly taskService = inject(TaskService);

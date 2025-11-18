@@ -7,13 +7,19 @@
 
   <div class="register-card" *ngIf="!serviceUnavailable">
     <div class="register-header">
-      <h1>Criar Conta</h1>
+      <h1>
+        <ng-icon name="heroUserPlus" size="28"></ng-icon>
+        Criar Conta
+      </h1>
       <p>Preencha os dados para se cadastrar</p>
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
       <div class="form-group">
-        <label for="name">Nome Completo</label>
+        <label for="name">
+          <ng-icon name="heroUser" size="18"></ng-icon>
+          Nome Completo
+        </label>
         <input
           type="text"
           id="name"
@@ -22,13 +28,17 @@
           [class.error]="name?.invalid && name?.touched"
         />
         <span class="error-message" *ngIf="name?.invalid && name?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           <span *ngIf="name?.errors?.['required']">Nome é obrigatório</span>
           <span *ngIf="name?.errors?.['minlength']">Nome deve ter no mínimo 3 caracteres</span>
         </span>
       </div>
 
       <div class="form-group">
-        <label for="email">E-mail</label>
+        <label for="email">
+          <ng-icon name="heroEnvelope" size="18"></ng-icon>
+          E-mail
+        </label>
         <input
           type="email"
           id="email"
@@ -37,13 +47,17 @@
           [class.error]="email?.invalid && email?.touched"
         />
         <span class="error-message" *ngIf="email?.invalid && email?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           <span *ngIf="email?.errors?.['required']">E-mail é obrigatório</span>
           <span *ngIf="email?.errors?.['email']">E-mail inválido</span>
         </span>
       </div>
 
       <div class="form-group">
-        <label for="password">Senha</label>
+        <label for="password">
+          <ng-icon name="heroLockClosed" size="18"></ng-icon>
+          Senha
+        </label>
         <input
           type="password"
           id="password"
@@ -52,13 +66,17 @@
           [class.error]="password?.invalid && password?.touched"
         />
         <span class="error-message" *ngIf="password?.invalid && password?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           <span *ngIf="password?.errors?.['required']">Senha é obrigatória</span>
           <span *ngIf="password?.errors?.['minlength']">Senha deve ter no mínimo 8 caracteres</span>
         </span>
       </div>
 
       <div class="form-group">
-        <label for="confirmPassword">Confirmar Senha</label>
+        <label for="confirmPassword">
+          <ng-icon name="heroLockClosed" size="18"></ng-icon>
+          Confirmar Senha
+        </label>
         <input
           type="password"
           id="confirmPassword"
@@ -67,26 +85,35 @@
           [class.error]="confirmPassword?.invalid && confirmPassword?.touched"
         />
         <span class="error-message" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           <span *ngIf="confirmPassword?.errors?.['required']">Confirmação de senha é obrigatória</span>
           <span *ngIf="confirmPassword?.errors?.['passwordMismatch']">As senhas não coincidem</span>
         </span>
       </div>
 
       <div class="success-alert" *ngIf="successMessage">
+        <ng-icon name="heroCheckCircle" size="20"></ng-icon>
         {{ successMessage }}
       </div>
 
       <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
+        <ng-icon name="heroExclamationCircle" size="20"></ng-icon>
         {{ errorMessage }}
       </div>
 
       <button type="submit" class="btn-primary" [disabled]="registerForm.invalid || isLoading">
+        <ng-icon *ngIf="isLoading" name="heroArrowPath" size="18" class="spin"></ng-icon>
+        <ng-icon *ngIf="!isLoading" name="heroUserPlus" size="18"></ng-icon>
         <span *ngIf="!isLoading">Cadastrar</span>
         <span *ngIf="isLoading">Cadastrando...</span>
       </button>
 
       <div class="login-link">
-        Já tem uma conta? <a routerLink="/login">Faça login</a>
+        Já tem uma conta? 
+        <a routerLink="/login">
+          <ng-icon name="heroArrowRightOnRectangle" size="16"></ng-icon>
+          Faça login
+        </a>
       </div>
     </form>
   </div>

@@ -7,6 +7,7 @@
   ></app-service-unavailable>
 
   <div class="loading" *ngIf="isLoading">
+    <ng-icon name="heroArrowPath" size="32" class="spin"></ng-icon>
     <p>Carregando tarefa...</p>
   </div>
 
@@ -16,13 +17,16 @@
         <h1>{{ task.title }}</h1>
         <div class="header-actions">
           <button type="button" class="btn-edit" (click)="editTask()">
-            ✏️ Editar
+            <ng-icon name="heroPencilSquare" size="18"></ng-icon>
+            Editar
           </button>
           <button class="btn-delete" (click)="deleteTask()">
-            🗑️ Excluir
+            <ng-icon name="heroTrash" size="18"></ng-icon>
+            Excluir
           </button>
           <button type="button" class="btn-back" (click)="goBack()">
-            ← Voltar
+            <ng-icon name="heroArrowLeft" size="18"></ng-icon>
+            Voltar
           </button>
         </div>
       </div>
@@ -46,15 +50,21 @@
       </div>
 
       <div class="info-section">
-        <h3>Descrição</h3>
+        <h3>
+          <ng-icon name="heroDocumentText" size="20"></ng-icon>
+          Descrição
+        </h3>
         <p class="description">{{ task.description || 'Sem descrição' }}</p>
       </div>
 
       <div class="info-section">
-        <h3>Projeto</h3>
+        <h3>
+          <ng-icon name="heroFolderOpen" size="20"></ng-icon>
+          Projeto
+        </h3>
         <div class="project-info">
           <div class="info-item">
-            <span class="info-icon">📁</span>
+            <ng-icon name="heroFolderOpen" size="20"></ng-icon>
             <div class="info-content">
               <span class="info-label">Nome do Projeto</span>
               <span class="info-value">{{ task.project.name }}</span>
@@ -64,10 +74,20 @@
       </div>
 
       <div class="info-section">
-        <h3>Responsável</h3>
+        <h3>
+          <ng-icon name="heroUser" size="20"></ng-icon>
+          Responsável
+        </h3>
         <div class="assignee-info">
           <div class="info-item">
-            <span class="info-icon">👤</span>
+            <ng-icon name="heroUser" size="20"></ng-icon>
+            <div class="info-content">
+              <span class="info-label">Nome</span>
+              <span class="info-value">{{ task.assignee.name }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <ng-icon name="heroUser" size="20"></ng-icon>
             <div class="info-content">
               <span class="info-label">Email</span>
               <span class="info-value">{{ task.assignee.email }}</span>
@@ -77,10 +97,13 @@
       </div>
 
       <div class="info-section">
-        <h3>Datas</h3>
+        <h3>
+          <ng-icon name="heroCalendar" size="20"></ng-icon>
+          Datas
+        </h3>
         <div class="dates-grid">
           <div class="info-item">
-            <span class="info-icon">📅</span>
+            <ng-icon name="heroCalendar" size="20"></ng-icon>
             <div class="info-content">
               <span class="info-label">Data de Vencimento</span>
               <span class="info-value">{{ task.dueDate | date: 'dd/MM/yyyy' }}</span>
@@ -91,6 +114,7 @@
 
       <!-- Error Message -->
       <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
+        <ng-icon name="heroExclamationCircle" size="20"></ng-icon>
         {{ errorMessage }}
       </div>
     </div>
@@ -98,11 +122,12 @@
 
   <!-- Not Found -->
   <div class="not-found" *ngIf="!task && !isLoading && !serviceUnavailable">
-    <div class="error-icon">❌</div>
+    <ng-icon name="heroXCircle" size="64"></ng-icon>
     <h2>Tarefa não encontrada</h2>
     <p>A tarefa que você está procurando não existe ou foi removida.</p>
     <button class="btn-back" routerLink="/tasks">
-      ← Voltar para Tarefas
+      <ng-icon name="heroArrowLeft" size="18"></ng-icon>
+      Voltar para Tarefas
     </button>
   </div>
 </div>

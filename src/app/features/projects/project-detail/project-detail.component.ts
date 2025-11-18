@@ -1,6 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { 
+  heroArrowLeft,
+  heroSquares2x2,
+  heroPencilSquare,
+  heroTrash,
+  heroUser,
+  heroEnvelope,
+  heroCalendar,
+  heroDocumentText,
+  heroCheckCircle,
+  heroExclamationCircle,
+  heroArrowPath
+} from '@ng-icons/heroicons/outline';
 import { ProjectService } from '../../../core/services/project.service';
 import { TaskService } from '../../../core/services/task.service';
 import { Project } from '../../../shared/models/project.model';
@@ -9,9 +23,24 @@ import { Task } from '../../../shared/models/task.model';
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NgIconComponent],
   templateUrl: './project-detail.component.html',
-  styleUrl: './project-detail.component.css'
+  styleUrl: './project-detail.component.css',
+  viewProviders: [
+    provideIcons({ 
+      heroArrowLeft,
+      heroSquares2x2,
+      heroPencilSquare,
+      heroTrash,
+      heroUser,
+      heroEnvelope,
+      heroCalendar,
+      heroDocumentText,
+      heroCheckCircle,
+      heroExclamationCircle,
+      heroArrowPath
+    })
+  ]
 })
 export class ProjectDetailComponent implements OnInit {
   private readonly projectService = inject(ProjectService);

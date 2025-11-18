@@ -21,6 +21,19 @@
   margin-bottom: var(--space-xl);
 }
 
+.header-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--radius-lg);
+  color: var(--neutral-0);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
 .login-header h1 {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
@@ -50,6 +63,9 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--neutral-700);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .form-group input {
@@ -75,6 +91,9 @@
   font-size: var(--font-size-xs);
   color: var(--danger-red);
   margin-top: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .form-actions {
@@ -102,10 +121,13 @@
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .btn-primary {
-  background: var(--primary-blue);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: var(--neutral-0);
   border: none;
   padding: var(--space-sm) var(--space-lg);
@@ -115,10 +137,15 @@
   cursor: pointer;
   transition: all 0.2s ease;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--primary-blue-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
 .btn-primary:disabled {
@@ -134,15 +161,28 @@
 }
 
 .register-link a {
-  color: var(--primary-blue);
+  color: #667eea;
   text-decoration: none;
   font-weight: var(--font-weight-semibold);
   transition: color 0.2s ease;
 }
 
 .register-link a:hover {
-  color: var(--primary-blue-hover);
+  color: #764ba2;
   text-decoration: underline;
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Tablet */

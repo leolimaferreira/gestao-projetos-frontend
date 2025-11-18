@@ -7,13 +7,46 @@ import { Task } from '../../../shared/models/task.model';
 import { Status } from '../../../shared/enums/status.enum';
 import { Priority } from '../../../shared/enums/priority.enum';
 import { AuthService } from '../../../core/services/auth.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroArrowLeft,
+  heroPlus,
+  heroMagnifyingGlass,
+  heroFunnel,
+  heroXMark,
+  heroArrowPath,
+  heroExclamationCircle,
+  heroCheckCircle,
+  heroCalendar,
+  heroChevronLeft,
+  heroChevronRight,
+  heroEye,
+  heroDocumentText
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, NgIconComponent],
   templateUrl: './task-list.component.html',
-  styleUrl: './task-list.component.css'
+  styleUrl: './task-list.component.css',
+  viewProviders: [
+    provideIcons({
+      heroArrowLeft,
+      heroPlus,
+      heroMagnifyingGlass,
+      heroFunnel,
+      heroXMark,
+      heroArrowPath,
+      heroExclamationCircle,
+      heroCheckCircle,
+      heroCalendar,
+      heroChevronLeft,
+      heroChevronRight,
+      heroEye,
+      heroDocumentText
+    })
+  ]
 })
 export class TaskListComponent implements OnInit {
   private readonly taskService = inject(TaskService);

@@ -4,13 +4,32 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroEnvelope,
+  heroLockClosed,
+  heroExclamationCircle,
+  heroArrowRightOnRectangle,
+  heroArrowPath,
+  heroFolder
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, ServiceUnavailableComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ServiceUnavailableComponent, NgIconComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  viewProviders: [
+    provideIcons({
+      heroEnvelope,
+      heroLockClosed,
+      heroExclamationCircle,
+      heroArrowRightOnRectangle,
+      heroArrowPath,
+      heroFolder
+    })
+  ]
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);

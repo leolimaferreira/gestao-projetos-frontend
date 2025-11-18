@@ -6,6 +6,7 @@
   ></app-service-unavailable>
 
   <div class="loading" *ngIf="isLoading">
+    <ng-icon name="heroArrowPath" size="32" class="spin"></ng-icon>
     <p>Carregando quadro Kanban...</p>
   </div>
 
@@ -13,7 +14,8 @@
     <div class="kanban-header">
       <div class="header-left">
         <button class="btn-back" [routerLink]="['/projects', project?.id]">
-          ← Voltar
+          <ng-icon name="heroArrowLeft" size="18"></ng-icon>
+          Voltar
         </button>
         <div class="project-info" *ngIf="project">
           <h1>{{ project.name }}</h1>
@@ -21,11 +23,13 @@
         </div>
       </div>
       <button class="btn-new-task" [routerLink]="['/tasks/new']" [queryParams]="{projectId: project?.id, returnUrl: '/projects/' + project?.id + '/kanban'}">
-        ➕ Nova Tarefa
+        <ng-icon name="heroPlus" size="18"></ng-icon>
+        Nova Tarefa
       </button>
     </div>
 
     <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
+      <ng-icon name="heroExclamationCircle" size="20"></ng-icon>
       {{ errorMessage }}
     </div>
 
@@ -38,7 +42,10 @@
         (dragleave)="onDragLeave($event)"
         (drop)="onDrop('TODO', $event)">
         <div class="column-header">
-          <h2>📋 A Fazer</h2>
+          <h2>
+            <ng-icon name="heroClipboardDocumentList" size="24"></ng-icon>
+            A Fazer
+          </h2>
           <span class="task-count">{{ todoTasks.length }}</span>
         </div>
         <div class="column-content">
@@ -58,16 +65,17 @@
             <p class="card-description">{{ task.description }}</p>
             <div class="card-footer">
               <div class="card-info">
-                <span class="info-icon">👤</span>
+                <ng-icon name="heroUser" size="16"></ng-icon>
                 <span>{{ task.assignee.name }}</span>
               </div>
               <div class="card-info">
-                <span class="info-icon">📅</span>
+                <ng-icon name="heroCalendar" size="16"></ng-icon>
                 <span>{{ task.dueDate | date: 'dd/MM' }}</span>
               </div>
             </div>
           </div>
           <div class="empty-column" *ngIf="todoTasks.length === 0">
+            <ng-icon name="heroInboxArrowDown" size="48"></ng-icon>
             <p>Arraste tarefas aqui</p>
           </div>
         </div>
@@ -81,7 +89,10 @@
         (dragleave)="onDragLeave($event)"
         (drop)="onDrop('DOING', $event)">
         <div class="column-header">
-          <h2>⚙️ Em Progresso</h2>
+          <h2>
+            <ng-icon name="heroCog" size="24"></ng-icon>
+            Em Progresso
+          </h2>
           <span class="task-count">{{ doingTasks.length }}</span>
         </div>
         <div class="column-content">
@@ -101,16 +112,17 @@
             <p class="card-description">{{ task.description }}</p>
             <div class="card-footer">
               <div class="card-info">
-                <span class="info-icon">👤</span>
+                <ng-icon name="heroUser" size="16"></ng-icon>
                 <span>{{ task.assignee.name }}</span>
               </div>
               <div class="card-info">
-                <span class="info-icon">📅</span>
+                <ng-icon name="heroCalendar" size="16"></ng-icon>
                 <span>{{ task.dueDate | date: 'dd/MM' }}</span>
               </div>
             </div>
           </div>
           <div class="empty-column" *ngIf="doingTasks.length === 0">
+            <ng-icon name="heroInboxArrowDown" size="48"></ng-icon>
             <p>Arraste tarefas aqui</p>
           </div>
         </div>
@@ -124,7 +136,10 @@
         (dragleave)="onDragLeave($event)"
         (drop)="onDrop('DONE', $event)">
         <div class="column-header">
-          <h2>✅ Concluída</h2>
+          <h2>
+            <ng-icon name="heroCheckCircle" size="24"></ng-icon>
+            Concluída
+          </h2>
           <span class="task-count">{{ doneTasks.length }}</span>
         </div>
         <div class="column-content">
@@ -144,16 +159,17 @@
             <p class="card-description">{{ task.description }}</p>
             <div class="card-footer">
               <div class="card-info">
-                <span class="info-icon">👤</span>
+                <ng-icon name="heroUser" size="16"></ng-icon>
                 <span>{{ task.assignee.name }}</span>
               </div>
               <div class="card-info">
-                <span class="info-icon">📅</span>
+                <ng-icon name="heroCalendar" size="16"></ng-icon>
                 <span>{{ task.dueDate | date: 'dd/MM' }}</span>
               </div>
             </div>
           </div>
           <div class="empty-column" *ngIf="doneTasks.length === 0">
+            <ng-icon name="heroInboxArrowDown" size="48"></ng-icon>
             <p>Arraste tarefas aqui</p>
           </div>
         </div>

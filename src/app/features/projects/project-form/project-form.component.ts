@@ -2,6 +2,19 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroArrowLeft,
+  heroFolderPlus,
+  heroPencilSquare,
+  heroDocumentText,
+  heroEnvelope,
+  heroCalendar,
+  heroXMark,
+  heroCheckCircle,
+  heroExclamationCircle,
+  heroArrowPath
+} from '@ng-icons/heroicons/outline';
 import { ProjectService } from '../../../core/services/project.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
@@ -10,9 +23,23 @@ import { NavigationService } from '../../../core/services/navigation.service';
 @Component({
   selector: 'app-project-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIconComponent],
   templateUrl: './project-form.component.html',
-  styleUrl: './project-form.component.css'
+  styleUrl: './project-form.component.css',
+  viewProviders: [
+    provideIcons({
+      heroArrowLeft,
+      heroFolderPlus,
+      heroPencilSquare,
+      heroDocumentText,
+      heroEnvelope,
+      heroCalendar,
+      heroXMark,
+      heroCheckCircle,
+      heroExclamationCircle,
+      heroArrowPath
+    })
+  ]
 })
 export class ProjectFormComponent implements OnInit {
   public showOwnerEmailField = false;

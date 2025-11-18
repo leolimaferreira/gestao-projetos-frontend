@@ -5,13 +5,36 @@ import { AuthService } from '../../core/services/auth.service';
 import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
 import { ServiceUnavailableComponent } from '../../shared/components/service-unavailable/service-unavailable.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { 
+  heroArrowRightOnRectangle,
+  heroArrowPath,
+  heroFolderOpen,
+  heroCheckCircle,
+  heroArrowRight,
+  heroPlusCircle,
+  heroDocumentText,
+  heroSquares2x2
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, ServiceUnavailableComponent],
+  imports: [CommonModule, RouterLink, ServiceUnavailableComponent, NgIconComponent],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
+  viewProviders: [
+    provideIcons({
+      heroArrowRightOnRectangle,
+      heroArrowPath,
+      heroFolderOpen,
+      heroCheckCircle,
+      heroArrowRight,
+      heroPlusCircle,
+      heroDocumentText,
+      heroSquares2x2
+    })
+  ]
 })
 export class DashboardComponent implements OnInit {
   private readonly authService = inject(AuthService);

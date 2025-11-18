@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroLockClosed, heroExclamationCircle, heroCheckCircle, heroArrowPath, heroArrowLeft } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIconComponent],
   templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+  styleUrl: './reset-password.component.css',
+  viewProviders: [provideIcons({ heroLockClosed, heroExclamationCircle, heroCheckCircle, heroArrowPath, heroArrowLeft })]
 })
 export class ResetPasswordComponent implements OnInit {
   private readonly fb = inject(FormBuilder);

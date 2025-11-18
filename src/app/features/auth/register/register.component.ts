@@ -4,13 +4,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroUserPlus, heroUser, heroEnvelope, heroLockClosed, heroExclamationCircle, heroCheckCircle, heroArrowPath, heroArrowRightOnRectangle } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, ServiceUnavailableComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ServiceUnavailableComponent, NgIconComponent],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
+  viewProviders: [provideIcons({ heroUserPlus, heroUser, heroEnvelope, heroLockClosed, heroExclamationCircle, heroCheckCircle, heroArrowPath, heroArrowRightOnRectangle })]
 })
 export class RegisterComponent {
   private readonly fb = inject(FormBuilder);

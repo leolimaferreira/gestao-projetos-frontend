@@ -1,16 +1,26 @@
 <div class="task-form-container">
   <div class="form-header">
-    <h1>{{ isEditMode ? 'Editar Tarefa' : 'Nova Tarefa' }}</h1>
-    <button type="button" class="btn-back" (click)="goBack()">← Voltar</button>
+    <h1>
+      <ng-icon [name]="isEditMode ? 'heroPencilSquare' : 'heroDocumentPlus'" size="28"></ng-icon>
+      {{ isEditMode ? 'Editar Tarefa' : 'Nova Tarefa' }}
+    </h1>
+    <button type="button" class="btn-back" (click)="goBack()">
+      <ng-icon name="heroArrowLeft" size="18"></ng-icon>
+      Voltar
+    </button>
   </div>
 
   <div class="error-alert" *ngIf="errorMessage">
+    <ng-icon name="heroExclamationCircle" size="20"></ng-icon>
     {{ errorMessage }}
   </div>
 
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
     <div class="form-group">
-      <label for="title">Título *</label>
+      <label for="title">
+        <ng-icon name="heroCheckCircle" size="18"></ng-icon>
+        Título *
+      </label>
       <input
         type="text"
         id="title"
@@ -19,13 +29,17 @@
         [class.error]="title?.invalid && title?.touched"
       />
       <span class="error-message" *ngIf="title?.invalid && title?.touched">
+        <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
         <span *ngIf="title?.errors?.['required']">Título é obrigatório</span>
         <span *ngIf="title?.errors?.['minlength']">Título deve ter no mínimo 3 caracteres</span>
       </span>
     </div>
 
     <div class="form-group">
-      <label for="description">Descrição</label>
+      <label for="description">
+        <ng-icon name="heroDocumentText" size="18"></ng-icon>
+        Descrição
+      </label>
       <textarea
         id="description"
         formControlName="description"
@@ -36,7 +50,10 @@
 
     <div class="form-row">
       <div class="form-group">
-        <label for="status">Status *</label>
+        <label for="status">
+          <ng-icon name="heroCheckCircle" size="18"></ng-icon>
+          Status *
+        </label>
         <select
           id="status"
           formControlName="status"
@@ -48,12 +65,16 @@
           </option>
         </select>
         <span class="error-message" *ngIf="status?.invalid && status?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           Status é obrigatório
         </span>
       </div>
 
       <div class="form-group">
-        <label for="priority">Prioridade *</label>
+        <label for="priority">
+          <ng-icon name="heroExclamationCircle" size="18"></ng-icon>
+          Prioridade *
+        </label>
         <select
           id="priority"
           formControlName="priority"
@@ -65,6 +86,7 @@
           </option>
         </select>
         <span class="error-message" *ngIf="priority?.invalid && priority?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           Prioridade é obrigatória
         </span>
       </div>
@@ -72,7 +94,10 @@
 
     <div class="form-row">
       <div class="form-group">
-        <label for="projectName">Projeto *</label>
+        <label for="projectName">
+          <ng-icon name="heroFolderOpen" size="18"></ng-icon>
+          Projeto *
+        </label>
         <select
           id="projectName"
           formControlName="projectName"
@@ -84,12 +109,16 @@
           </option>
         </select>
         <span class="error-message" *ngIf="projectName?.invalid && projectName?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           Projeto é obrigatório
         </span>
       </div>
 
       <div class="form-group">
-        <label for="dueDate">Data de Vencimento *</label>
+        <label for="dueDate">
+          <ng-icon name="heroCalendar" size="18"></ng-icon>
+          Data de Vencimento *
+        </label>
         <input
           type="date"
           id="dueDate"
@@ -97,6 +126,7 @@
           [class.error]="dueDate?.invalid && dueDate?.touched"
         />
         <span class="error-message" *ngIf="dueDate?.invalid && dueDate?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           Data de vencimento é obrigatória
         </span>
       </div>
@@ -116,7 +146,10 @@
     </div>
 
     <div class="form-group autocomplete-wrapper" *ngIf="!isEditMode || showAssigneeEmailField">
-      <label for="assigneeEmail">Email do Responsável {{ !isEditMode ? '*' : '' }}</label>
+      <label for="assigneeEmail">
+        <ng-icon name="heroEnvelope" size="18"></ng-icon>
+        Email do Responsável {{ !isEditMode ? '*' : '' }}
+      </label>
       <input
         type="email"
         id="assigneeEmail"
@@ -132,10 +165,12 @@
           *ngFor="let email of emailSuggestions"
           (mousedown)="selectEmail(email)"
         >
+          <ng-icon name="heroEnvelope" size="16"></ng-icon>
           {{ email }}
         </div>
       </div>
       <span class="error-message" *ngIf="assigneeEmail?.invalid && assigneeEmail?.touched">
+        <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
         <span *ngIf="assigneeEmail?.errors?.['required']">Email é obrigatório</span>
         <span *ngIf="assigneeEmail?.errors?.['email']">Email inválido</span>
       </span>
@@ -143,9 +178,11 @@
 
     <div class="form-actions">
       <button type="button" class="btn-cancel" routerLink="/tasks" [disabled]="isLoading">
+        <ng-icon name="heroXMark" size="18"></ng-icon>
         Cancelar
       </button>
       <button type="submit" class="btn-submit" [disabled]="isLoading">
+        <ng-icon [name]="isLoading ? 'heroArrowPath' : 'heroCheckCircle'" size="18" [class.spin]="isLoading"></ng-icon>
         {{ isLoading ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Criar Tarefa') }}
       </button>
     </div>

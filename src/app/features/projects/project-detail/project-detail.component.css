@@ -73,6 +73,9 @@
 }
 
 .btn-kanban {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   background: rgba(76, 175, 80, 0.95);
   color: var(--neutral-0);
   border: none;
@@ -92,6 +95,9 @@
 }
 
 .btn-edit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   background: rgba(33, 150, 243, 0.95);
   color: var(--neutral-0);
   border: none;
@@ -111,6 +117,9 @@
 }
 
 .btn-delete {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   background: rgba(244, 67, 54, 0.95);
   color: var(--neutral-0);
   border: none;
@@ -173,13 +182,15 @@
 }
 
 .info-section h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   color: var(--neutral-800);
   margin-bottom: var(--space-md);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 14px;
 }
 
 .description {
@@ -203,22 +214,35 @@
 
 .info-item {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-sm);
+}
+
+.info-item > ng-icon {
+  color: #667eea;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
 }
 
 .info-label {
   font-weight: var(--font-weight-bold);
   color: var(--neutral-600);
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .info-value {
   color: var(--neutral-900);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
 }
 
 .tasks-section {
@@ -259,6 +283,9 @@
 }
 
 .tasks-header h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   color: var(--neutral-900);
   margin: 0;
   font-size: 24px;
@@ -325,6 +352,9 @@
 }
 
 .task-header h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   color: var(--neutral-900);
   margin: 0;
   font-size: 18px;
@@ -402,19 +432,32 @@
 
 .task-info-item {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--space-xs);
 }
 
+.task-info-item > ng-icon {
+  color: #667eea;
+  flex-shrink: 0;
+}
+
 .task-info-label {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--neutral-600);
   font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+}
+
+.task-info-item > span:last-child {
+  font-size: 14px;
+  color: var(--neutral-900);
+  font-weight: var(--font-weight-semibold);
 }
 
 .loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
   text-align: center;
   padding: 80px var(--space-lg);
   color: var(--neutral-600);
@@ -423,18 +466,30 @@
 }
 
 .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
   text-align: center;
   padding: 80px var(--space-lg);
   color: var(--neutral-500);
 }
 
+.empty-state ng-icon {
+  color: #667eea;
+  opacity: 0.5;
+}
+
 .empty-state p {
-  margin: 0 0 var(--space-xl) 0;
+  margin: 0;
   font-size: 18px;
   font-weight: var(--font-weight-medium);
 }
 
 .error-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   background: linear-gradient(135deg, #FFF4F4 0%, #FFE8E8 100%);
   color: #C9190B;
   padding: var(--space-lg);

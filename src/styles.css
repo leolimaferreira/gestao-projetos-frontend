@@ -1,7 +1,5 @@
-/* Global Styles - Design System Profissional */
 
 :root {
-  /* Core Colors - Paleta Jira-inspired */
   --primary-blue: #0052CC;
   --primary-blue-hover: #0747A6;
   --primary-blue-light: #DEEBFF;
@@ -9,7 +7,6 @@
   --secondary-gray: #42526E;
   --secondary-gray-light: #7A869A;
   
-  /* Neutral Colors */
   --neutral-0: #FFFFFF;
   --neutral-50: #FAFBFC;
   --neutral-100: #F4F5F7;
@@ -20,7 +17,6 @@
   --neutral-800: #42526E;
   --neutral-900: #253858;
   
-  /* Semantic Colors */
   --success-green: #00875A;
   --success-light: #E3FCEF;
   --warning-yellow: #FF991F;
@@ -30,28 +26,23 @@
   --info-purple: #6554C0;
   --info-light: #EAE6FF;
   
-  /* Status Colors */
   --status-todo: #0052CC;
   --status-doing: #FF991F;
   --status-done: #00875A;
   
-  /* Priority Colors */
   --priority-low: #0065FF;
   --priority-medium: #FF991F;
   --priority-high: #DE350B;
   
-  /* Shadows */
   --shadow-sm: 0 1px 1px rgba(9, 30, 66, 0.25);
   --shadow-md: 0 3px 5px rgba(9, 30, 66, 0.2), 0 0 1px rgba(9, 30, 66, 0.31);
   --shadow-lg: 0 8px 12px rgba(9, 30, 66, 0.15), 0 0 1px rgba(9, 30, 66, 0.31);
   --shadow-xl: 0 12px 24px rgba(9, 30, 66, 0.15), 0 0 1px rgba(9, 30, 66, 0.31);
   
-  /* Border Radius */
   --radius-sm: 3px;
   --radius-md: 4px;
   --radius-lg: 6px;
   
-  /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 12px;
@@ -59,7 +50,6 @@
   --space-xl: 24px;
   --space-2xl: 32px;
   
-  /* Typography */
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-size-xs: 11px;
   --font-size-sm: 12px;
@@ -122,7 +112,6 @@ input, select, textarea {
   font-family: var(--font-family);
 }
 
-/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -141,9 +130,6 @@ input, select, textarea {
   background: var(--neutral-500);
 }
 
-/* Responsividade Global */
-
-/* Tablets em landscape (1024px - 1280px) */
 @media (max-width: 1280px) {
   :root {
     --font-size-2xl: 22px;
@@ -151,7 +137,6 @@ input, select, textarea {
   }
 }
 
-/* Tablets em portrait (768px - 1024px) */
 @media (max-width: 1024px) {
   :root {
     --font-size-xl: 18px;
@@ -165,7 +150,6 @@ input, select, textarea {
   }
 }
 
-/* Mobile landscape e tablets pequenos (481px - 768px) */
 @media (max-width: 768px) {
   :root {
     --font-size-md: 13px;
@@ -179,7 +163,6 @@ input, select, textarea {
   }
 }
 
-/* Mobile portrait (até 480px) */
 @media (max-width: 480px) {
   :root {
     --font-size-xs: 10px;
@@ -202,7 +185,6 @@ input, select, textarea {
   }
 }
 
-/* Muito pequeno (até 375px) - iPhones pequenos */
 @media (max-width: 375px) {
   :root {
     --space-xl: 14px;
@@ -210,10 +192,22 @@ input, select, textarea {
   }
 }
 
-/* Landscape em mobile */
 @media (max-height: 500px) and (orientation: landscape) {
   :root {
     --space-xl: 12px;
     --space-2xl: 16px;
   }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
 }

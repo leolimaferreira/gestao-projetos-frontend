@@ -26,6 +26,14 @@
   font-weight: var(--font-weight-bold);
   color: var(--neutral-900);
   margin: 0 0 var(--space-xs) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.register-header h1 ng-icon {
+  color: #667eea;
 }
 
 .register-header p {
@@ -50,6 +58,13 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--neutral-700);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.form-group label ng-icon {
+  color: #667eea;
 }
 
 .form-group input {
@@ -75,6 +90,9 @@
   font-size: var(--font-size-xs);
   color: var(--danger-red);
   margin-top: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .success-alert {
@@ -84,6 +102,9 @@
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .error-alert {
@@ -93,6 +114,9 @@
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .btn-primary {
@@ -106,6 +130,10 @@
   cursor: pointer;
   transition: all 0.2s ease;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -129,6 +157,9 @@
   text-decoration: none;
   font-weight: var(--font-weight-semibold);
   transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .login-link a:hover {

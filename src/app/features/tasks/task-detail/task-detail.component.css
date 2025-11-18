@@ -29,6 +29,10 @@
 }
 
 .loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
   text-align: center;
   padding: var(--space-2xl);
   color: var(--neutral-0);
@@ -74,6 +78,9 @@
 .btn-edit,
 .btn-delete,
 .btn-back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   padding: var(--space-md) var(--space-xl);
   border: none;
   border-radius: var(--radius-lg);
@@ -276,8 +283,8 @@
 
 .info-item {
   display: flex;
-  align-items: center;
-  gap: var(--space-lg);
+  align-items: flex-start;
+  gap: var(--space-md);
   padding: var(--space-lg);
   background: var(--neutral-0);
   border-radius: var(--radius-md);
@@ -293,18 +300,10 @@
   box-shadow: 0 6px 16px rgba(102, 126, 234, 0.2);
 }
 
-.info-icon {
-  font-size: 32px;
+.info-item > ng-icon {
+  color: #667eea;
+  margin-top: 2px;
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: var(--radius-md);
-  color: var(--neutral-0);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 .info-content {
@@ -315,20 +314,24 @@
 }
 
 .info-label {
-  font-size: var(--font-size-xs);
+  font-size: 12px;
   font-weight: 700;
   color: var(--neutral-600);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .info-value {
-  font-size: var(--font-size-md);
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--neutral-900);
+  line-height: 1.5;
 }
 
 .error-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
   border: 2px solid #EF4444;
   color: #991B1B;
@@ -341,6 +344,10 @@
 }
 
 .not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
   text-align: center;
   padding: var(--space-2xl);
   max-width: 600px;
@@ -350,24 +357,26 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
-.error-icon {
-  font-size: 80px;
-  margin-bottom: var(--space-lg);
+.not-found > ng-icon {
   color: #EF4444;
 }
 
 .not-found h2 {
   font-size: var(--font-size-2xl);
   color: #EF4444;
-  margin: 0 0 var(--space-lg) 0;
+  margin: 0;
   font-weight: 700;
 }
 
 .not-found p {
   font-size: var(--font-size-md);
   color: var(--neutral-600);
-  margin: 0 0 var(--space-2xl) 0;
+  margin: 0;
   line-height: 1.6;
+}
+
+.not-found .btn-back {
+  margin-top: var(--space-md);
 }
 
 /* Tablet landscape */

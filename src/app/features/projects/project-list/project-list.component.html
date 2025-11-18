@@ -4,10 +4,12 @@
       <h1>Projetos</h1>
       <div class="header-actions">
         <button class="btn-secondary" routerLink="/dashboard">
-          ← Dashboard
+          <ng-icon name="heroArrowLeft" size="18"></ng-icon>
+          Dashboard
         </button>
         <button class="btn-primary" routerLink="/projects/new">
-          + Novo Projeto
+          <ng-icon name="heroPlus" size="18"></ng-icon>
+          Novo Projeto
         </button>
       </div>
     </div>
@@ -15,10 +17,16 @@
 
   <div class="content">
     <div class="filters-card">
-      <h3>Filtros</h3>
+      <h3>
+        <ng-icon name="heroFunnel" size="20"></ng-icon>
+        Filtros
+      </h3>
       <div class="filters-grid">
         <div class="filter-group">
-          <label for="name">Nome</label>
+          <label for="name">
+            <ng-icon name="heroMagnifyingGlass" size="16"></ng-icon>
+            Nome
+          </label>
           <input
             type="text"
             id="name"
@@ -28,7 +36,10 @@
         </div>
 
         <div class="filter-group">
-          <label for="description">Descrição</label>
+          <label for="description">
+            <ng-icon name="heroFolderOpen" size="16"></ng-icon>
+            Descrição
+          </label>
           <input
             type="text"
             id="description"
@@ -38,7 +49,10 @@
         </div>
 
         <div class="filter-group">
-          <label for="startDate">Data de Início</label>
+          <label for="startDate">
+            <ng-icon name="heroCalendar" size="16"></ng-icon>
+            Data de Início
+          </label>
           <input
             type="date"
             id="startDate"
@@ -47,7 +61,10 @@
         </div>
 
         <div class="filter-group">
-          <label for="endDate">Data de Término</label>
+          <label for="endDate">
+            <ng-icon name="heroCalendar" size="16"></ng-icon>
+            Data de Término
+          </label>
           <input
             type="date"
             id="endDate"
@@ -57,16 +74,24 @@
       </div>
 
       <div class="filter-actions">
-        <button class="btn-filter" (click)="applyFilters()">Aplicar Filtros</button>
-        <button class="btn-clear" (click)="clearFilters()">Limpar</button>
+        <button class="btn-filter" (click)="applyFilters()">
+          <ng-icon name="heroFunnel" size="16"></ng-icon>
+          Aplicar Filtros
+        </button>
+        <button class="btn-clear" (click)="clearFilters()">
+          <ng-icon name="heroXMark" size="16"></ng-icon>
+          Limpar
+        </button>
       </div>
     </div>
 
     <div class="error-alert" *ngIf="errorMessage">
+      <ng-icon name="heroExclamationCircle" size="20"></ng-icon>
       {{ errorMessage }}
     </div>
 
     <div class="loading" *ngIf="isLoading">
+      <ng-icon name="heroArrowPath" size="32" class="spin-icon"></ng-icon>
       <p>Carregando projetos...</p>
     </div>
 
@@ -74,8 +99,14 @@
       <div class="project-card" *ngFor="let project of projects">
         <div class="project-header">
           <div class="project-title-row">
-            <h3>{{ project.name }}</h3>
-            <span class="project-owner-badge">Por: {{ project.owner.name }}</span>
+            <h3>
+              <ng-icon name="heroFolderOpen" size="20"></ng-icon>
+              {{ project.name }}
+            </h3>
+            <span class="project-owner-badge">
+              <ng-icon name="heroUser" size="14"></ng-icon>
+              {{ project.owner.name }}
+            </span>
           </div>
         </div>
 
@@ -83,31 +114,50 @@
 
         <div class="project-info">
           <div class="info-item">
+            <ng-icon name="heroCalendar" size="16"></ng-icon>
             <span class="info-label">Início:</span>
             <span>{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
           </div>
           <div class="info-item">
+            <ng-icon name="heroCalendar" size="16"></ng-icon>
             <span class="info-label">Término:</span>
             <span>{{ project.endDate | date: 'dd/MM/yyyy' }}</span>
           </div>
         </div>
 
         <div class="project-actions">
-          <button class="btn-view" [routerLink]="['/projects', project.id]">👁️ Ver</button>
-          <button class="btn-edit" *ngIf="isOwner(project)" [routerLink]="['/projects/edit', project.id]">✏️ Editar</button>
-          <button class="btn-delete" *ngIf="isOwner(project)" (click)="deleteProject(project.id)">🗑️ Excluir</button>
+          <button class="btn-view" [routerLink]="['/projects', project.id]">
+            <ng-icon name="heroEye" size="16"></ng-icon>
+            Ver
+          </button>
+          <button class="btn-edit" *ngIf="isOwner(project)" [routerLink]="['/projects/edit', project.id]">
+            <ng-icon name="heroPlus" size="16"></ng-icon>
+            Editar
+          </button>
+          <button class="btn-delete" *ngIf="isOwner(project)" (click)="deleteProject(project.id)">
+            <ng-icon name="heroXMark" size="16"></ng-icon>
+            Excluir
+          </button>
         </div>
       </div>
     </div>
 
     <div class="empty-state" *ngIf="!isLoading && projects.length === 0 && allProjects.length === 0">
+      <ng-icon name="heroFolderOpen" size="48"></ng-icon>
       <p>Nenhum projeto encontrado.</p>
-      <button class="btn-primary" routerLink="/projects/new">Criar Novo Projeto</button>
+      <button class="btn-primary" routerLink="/projects/new">
+        <ng-icon name="heroPlus" size="18"></ng-icon>
+        Criar Novo Projeto
+      </button>
     </div>
 
     <div class="empty-state" *ngIf="!isLoading && projects.length === 0 && allProjects.length > 0">
+      <ng-icon name="heroMagnifyingGlass" size="48"></ng-icon>
       <p>Nenhum projeto encontrado com os filtros aplicados.</p>
-      <button class="btn-secondary" (click)="clearFilters()">Limpar Filtros</button>
+      <button class="btn-secondary" (click)="clearFilters()">
+        <ng-icon name="heroXMark" size="18"></ng-icon>
+        Limpar Filtros
+      </button>
     </div>
 
     <div class="pagination" *ngIf="!isLoading && totalPages > 1">
@@ -115,7 +165,8 @@
         class="pagination-btn" 
         [disabled]="currentPage === 0" 
         (click)="previousPage()">
-        ← Anterior
+        <ng-icon name="heroChevronLeft" size="18"></ng-icon>
+        Anterior
       </button>
 
       <div class="pagination-numbers">
@@ -132,7 +183,8 @@
         class="pagination-btn" 
         [disabled]="currentPage === totalPages - 1" 
         (click)="nextPage()">
-        Próxima →
+        Próxima
+        <ng-icon name="heroChevronRight" size="18"></ng-icon>
       </button>
 
       <div class="pagination-info">

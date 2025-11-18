@@ -1,17 +1,27 @@
 <div class="form-container">
   <div class="header">
-    <h1>{{ isEditMode ? 'Editar Projeto' : 'Novo Projeto' }}</h1>
-    <button type="button" class="btn-back" (click)="goBack()">← Voltar</button>
+    <h1>
+      <ng-icon [name]="isEditMode ? 'heroPencilSquare' : 'heroFolderPlus'" size="28"></ng-icon>
+      {{ isEditMode ? 'Editar Projeto' : 'Novo Projeto' }}
+    </h1>
+    <button type="button" class="btn-back" (click)="goBack()">
+      <ng-icon name="heroArrowLeft" size="18"></ng-icon>
+      Voltar
+    </button>
   </div>
 
   <div class="form-card">
     <div class="loading" *ngIf="isLoading && isEditMode">
+      <ng-icon name="heroArrowPath" size="32" class="spin"></ng-icon>
       <p>Carregando dados do projeto...</p>
     </div>
 
     <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading || !isEditMode">
       <div class="form-group">
-        <label for="name">Nome do Projeto {{ !isEditMode ? '*' : '' }}</label>
+        <label for="name">
+          <ng-icon name="heroFolderPlus" size="18"></ng-icon>
+          Nome do Projeto {{ !isEditMode ? '*' : '' }}
+        </label>
         <input
           type="text"
           id="name"
@@ -20,13 +30,17 @@
           [class.error]="name?.invalid && name?.touched"
         />
         <span class="error-message" *ngIf="name?.invalid && name?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           <span *ngIf="name?.errors?.['required']">Nome é obrigatório</span>
           <span *ngIf="name?.errors?.['minlength']">Nome deve ter no mínimo 3 caracteres</span>
         </span>
       </div>
 
       <div class="form-group">
-        <label for="description">Descrição</label>
+        <label for="description">
+          <ng-icon name="heroDocumentText" size="18"></ng-icon>
+          Descrição
+        </label>
         <textarea
           id="description"
           formControlName="description"
@@ -46,7 +60,10 @@
       </div>
 
       <div class="form-group" *ngIf="showOwnerEmailField || !isEditMode">
-        <label for="ownerEmail">Email do Proprietário {{ !isEditMode ? '*' : '' }}</label>
+        <label for="ownerEmail">
+          <ng-icon name="heroEnvelope" size="18"></ng-icon>
+          Email do Proprietário {{ !isEditMode ? '*' : '' }}
+        </label>
         <div class="autocomplete-wrapper">
           <input
             type="email"
@@ -64,12 +81,14 @@
               (click)="selectEmail(email)"
             >
               <div class="user-info">
+                <ng-icon name="heroEnvelope" size="16"></ng-icon>
                 <span class="user-email">{{ email }}</span>
               </div>
             </div>
           </div>
         </div>
         <span class="error-message" *ngIf="projectForm.get('ownerEmail')?.invalid && projectForm.get('ownerEmail')?.touched">
+          <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
           <span *ngIf="projectForm.get('ownerEmail')?.errors?.['required']">Email do proprietário é obrigatório</span>
           <span *ngIf="projectForm.get('ownerEmail')?.errors?.['email']">Email inválido</span>
         </span>
@@ -77,7 +96,10 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="startDate">Data de Início {{ !isEditMode ? '*' : '' }}</label>
+          <label for="startDate">
+            <ng-icon name="heroCalendar" size="18"></ng-icon>
+            Data de Início {{ !isEditMode ? '*' : '' }}
+          </label>
           <input
             type="date"
             id="startDate"
@@ -85,6 +107,7 @@
             [class.error]="startDate?.invalid && startDate?.touched"
           />
           <span class="error-message" *ngIf="startDate?.invalid && startDate?.touched">
+            <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
             <span *ngIf="startDate?.errors?.['required']">Data de início é obrigatória</span>
           </span>
           <small class="current-value" *ngIf="isEditMode && currentProject">
@@ -93,7 +116,10 @@
         </div>
 
         <div class="form-group">
-          <label for="endDate">Data de Término {{ !isEditMode ? '*' : '' }}</label>
+          <label for="endDate">
+            <ng-icon name="heroCalendar" size="18"></ng-icon>
+            Data de Término {{ !isEditMode ? '*' : '' }}
+          </label>
           <input
             type="date"
             id="endDate"
@@ -101,6 +127,7 @@
             [class.error]="endDate?.invalid && endDate?.touched"
           />
           <span class="error-message" *ngIf="endDate?.invalid && endDate?.touched">
+            <ng-icon name="heroExclamationCircle" size="16"></ng-icon>
             <span *ngIf="endDate?.errors?.['required']">Data de término é obrigatória</span>
           </span>
           <small class="current-value" *ngIf="isEditMode && currentProject">
@@ -110,14 +137,17 @@
       </div>
 
       <div class="error-alert" *ngIf="errorMessage">
+        <ng-icon name="heroExclamationCircle" size="20"></ng-icon>
         {{ errorMessage }}
       </div>
 
       <div class="form-actions">
         <button type="button" class="btn-secondary" routerLink="/projects">
+          <ng-icon name="heroXMark" size="18"></ng-icon>
           Cancelar
         </button>
         <button type="submit" class="btn-primary" [disabled]="projectForm.invalid || isLoading">
+          <ng-icon [name]="isLoading ? 'heroArrowPath' : 'heroCheckCircle'" size="18" [class.spin]="isLoading"></ng-icon>
           <span *ngIf="!isLoading">{{ isEditMode ? 'Atualizar' : 'Criar' }} Projeto</span>
           <span *ngIf="isLoading">{{ isEditMode ? 'Atualizando' : 'Criando' }}...</span>
         </button>

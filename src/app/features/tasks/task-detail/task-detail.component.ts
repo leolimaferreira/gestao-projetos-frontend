@@ -1,6 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroArrowLeft,
+  heroPencilSquare,
+  heroTrash,
+  heroDocumentText,
+  heroFolderOpen,
+  heroUser,
+  heroCalendar,
+  heroExclamationCircle,
+  heroArrowPath,
+  heroXCircle
+} from '@ng-icons/heroicons/outline';
 import { TaskService } from '../../../core/services/task.service';
 import { Task } from '../../../shared/models/task.model';
 import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
@@ -9,9 +22,23 @@ import { NavigationService } from '../../../core/services/navigation.service';
 @Component({
   selector: 'app-task-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, ServiceUnavailableComponent],
+  imports: [CommonModule, RouterLink, ServiceUnavailableComponent, NgIconComponent],
   templateUrl: './task-detail.component.html',
-  styleUrl: './task-detail.component.css'
+  styleUrl: './task-detail.component.css',
+  viewProviders: [
+    provideIcons({
+      heroArrowLeft,
+      heroPencilSquare,
+      heroTrash,
+      heroDocumentText,
+      heroFolderOpen,
+      heroUser,
+      heroCalendar,
+      heroExclamationCircle,
+      heroArrowPath,
+      heroXCircle
+    })
+  ]
 })
 export class TaskDetailComponent implements OnInit {
   private readonly taskService = inject(TaskService);

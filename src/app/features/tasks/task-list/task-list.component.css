@@ -57,6 +57,13 @@
   gap: var(--space-md);
 }
 
+.btn-secondary,
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
 .content {
   max-width: 1400px;
   margin: 0 auto;
@@ -107,6 +114,9 @@
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--neutral-900);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .filter-group input,
@@ -145,6 +155,9 @@
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .btn-filter:hover {
@@ -162,6 +175,9 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .btn-clear:hover {
@@ -180,6 +196,9 @@
   font-size: var(--font-size-sm);
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .loading {
@@ -188,6 +207,10 @@
   color: var(--neutral-0);
   font-size: var(--font-size-lg);
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .tasks-list {
@@ -239,6 +262,9 @@
 }
 
 .task-title-row h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   font-size: var(--font-size-lg);
   font-weight: 700;
   color: var(--neutral-900);
@@ -292,6 +318,9 @@
 }
 
 .task-project {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: var(--font-size-sm);
   color: var(--neutral-600);
   margin: 0;
@@ -319,6 +348,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+}
+
+.info-item > ng-icon {
+  color: #667eea;
+  margin-bottom: 2px;
 }
 
 .info-label {
@@ -378,6 +412,9 @@
 }
 
 .btn-view {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: var(--neutral-0);
   border: none;
@@ -400,6 +437,9 @@
 }
 
 .btn-edit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   background: var(--info-purple);
   color: var(--neutral-0);
   border: none;
@@ -416,6 +456,9 @@
 }
 
 .btn-delete {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   background: var(--danger-red);
   color: var(--neutral-0);
   border: none;
@@ -432,8 +475,17 @@
 }
 
 .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
   text-align: center;
   padding: 80px var(--space-md);
+}
+
+.empty-state ng-icon {
+  color: #667eea;
+  opacity: 0.5;
 }
 
 .empty-state p {
@@ -452,6 +504,9 @@
 }
 
 .pagination-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
   background: var(--neutral-0);
   border: 1px solid var(--neutral-300);
   color: var(--neutral-700);

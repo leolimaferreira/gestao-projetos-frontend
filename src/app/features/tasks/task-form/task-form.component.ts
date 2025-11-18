@@ -2,6 +2,20 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroArrowLeft,
+  heroDocumentPlus,
+  heroPencilSquare,
+  heroDocumentText,
+  heroCheckCircle,
+  heroExclamationCircle,
+  heroFolderOpen,
+  heroCalendar,
+  heroEnvelope,
+  heroXMark,
+  heroArrowPath
+} from '@ng-icons/heroicons/outline';
 import { TaskService } from '../../../core/services/task.service';
 import { ProjectService } from '../../../core/services/project.service';
 import { UserService } from '../../../core/services/user.service';
@@ -12,9 +26,24 @@ import { Project } from '../../../shared/models/project.model';
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgIconComponent],
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.css'
+  styleUrl: './task-form.component.css',
+  viewProviders: [
+    provideIcons({
+      heroArrowLeft,
+      heroDocumentPlus,
+      heroPencilSquare,
+      heroDocumentText,
+      heroCheckCircle,
+      heroExclamationCircle,
+      heroFolderOpen,
+      heroCalendar,
+      heroEnvelope,
+      heroXMark,
+      heroArrowPath
+    })
+  ]
 })
 export class TaskFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);

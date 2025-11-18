@@ -7,13 +7,19 @@
 
   <div class="login-card" *ngIf="!serviceUnavailable">
     <div class="login-header">
+      <div class="header-icon">
+        <ng-icon name="heroFolder" size="48"></ng-icon>
+      </div>
       <h1>Gestão de Projetos</h1>
       <p>Faça login para continuar</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <div class="form-group">
-        <label for="email">E-mail</label>
+        <label for="email">
+          <ng-icon name="heroEnvelope" size="16"></ng-icon>
+          E-mail
+        </label>
         <input
           type="email"
           id="email"
@@ -22,13 +28,17 @@
           [class.error]="email?.invalid && email?.touched"
         />
         <span class="error-message" *ngIf="email?.invalid && email?.touched">
+          <ng-icon name="heroExclamationCircle" size="14"></ng-icon>
           <span *ngIf="email?.errors?.['required']">E-mail é obrigatório</span>
           <span *ngIf="email?.errors?.['email']">E-mail inválido</span>
         </span>
       </div>
 
       <div class="form-group">
-        <label for="password">Senha</label>
+        <label for="password">
+          <ng-icon name="heroLockClosed" size="16"></ng-icon>
+          Senha
+        </label>
         <input
           type="password"
           id="password"
@@ -37,6 +47,7 @@
           [class.error]="password?.invalid && password?.touched"
         />
         <span class="error-message" *ngIf="password?.invalid && password?.touched">
+          <ng-icon name="heroExclamationCircle" size="14"></ng-icon>
           <span *ngIf="password?.errors?.['required']">Senha é obrigatória</span>
           <span *ngIf="password?.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</span>
         </span>
@@ -47,10 +58,13 @@
       </div>
 
       <div class="error-alert" *ngIf="errorMessage && !serviceUnavailable">
+        <ng-icon name="heroExclamationCircle" size="18"></ng-icon>
         {{ errorMessage }}
       </div>
 
       <button type="submit" class="btn-primary" [disabled]="loginForm.invalid || isLoading">
+        <ng-icon *ngIf="!isLoading" name="heroArrowRightOnRectangle" size="18"></ng-icon>
+        <ng-icon *ngIf="isLoading" name="heroArrowPath" size="18" class="spin-icon"></ng-icon>
         <span *ngIf="!isLoading">Entrar</span>
         <span *ngIf="isLoading">Entrando...</span>
       </button>
