@@ -10,6 +10,7 @@
   box-shadow: 0 4px 20px rgba(102, 126, 234, 0.25);
   position: relative;
   overflow: hidden;
+  margin-bottom: 25px;
 }
 
 .header::before {
