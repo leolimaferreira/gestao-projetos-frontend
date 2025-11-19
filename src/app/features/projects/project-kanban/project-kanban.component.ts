@@ -73,7 +73,6 @@ export class ProjectKanbanComponent implements OnInit {
         this.project = project;
       },
       error: (error) => {
-        console.error('Erro ao carregar projeto:', error);
         if (error.status === 0) {
           this.serviceUnavailable = true;
           this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';
@@ -95,7 +94,6 @@ export class ProjectKanbanComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error: any) => {
-        console.error('Erro ao carregar tarefas:', error);
         if (error.status === 0) {
           this.serviceUnavailable = true;
           this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';
@@ -119,7 +117,6 @@ export class ProjectKanbanComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Erro ao atualizar tarefa:', error);
         this.errorMessage = error.error?.message || 'Erro ao atualizar tarefa.';
       }
     });

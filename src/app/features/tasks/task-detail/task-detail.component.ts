@@ -71,7 +71,6 @@ export class TaskDetailComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar tarefa:', error);
         if (error.status === 0) {
           this.serviceUnavailable = true;
           this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';
@@ -92,7 +91,6 @@ export class TaskDetailComponent implements OnInit {
           this.router.navigate(['/tasks']);
         },
         error: (error) => {
-          console.error('Erro ao excluir tarefa:', error);
           this.errorMessage = error.error?.message || 'Erro ao excluir tarefa.';
         }
       });

@@ -100,7 +100,6 @@ export class ProjectListComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar projetos:', error);
         if (error.status === 0) {
           this.serviceUnavailable = true;
           this.errorMessage = 'Não foi possível conectar ao servidor. Por favor, tente novamente mais tarde.';

@@ -72,7 +72,6 @@ export class ProjectDetailComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar projeto:', error);
         this.errorMessage = error.error?.message || 'Erro ao carregar projeto.';
         this.isLoading = false;
       }
@@ -88,7 +87,6 @@ export class ProjectDetailComponent implements OnInit {
         this.isLoadingTasks = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar tarefas:', error);
         this.isLoadingTasks = false;
       }
     });

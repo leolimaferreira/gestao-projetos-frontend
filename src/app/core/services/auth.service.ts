@@ -38,6 +38,10 @@ export class AuthService {
     return this.http.post<void>(`${this.apiUrl}/change-password`, data);
   }
 
+  loginWithGoogle(): void {
+    window.location.href = `${environment.apiUrl}/oauth2/authorization/google`;
+  }
+
   logout(): void {
     this.removeToken();
     this.removeUserName();
@@ -66,7 +70,6 @@ export class AuthService {
       const payload = this.decodeToken(token);
       return payload.sub || null;
     } catch (error) {
-      console.error('Erro ao decodificar token:', error);
       return '';
     }
   }

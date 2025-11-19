@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ServiceUnavailableComponent } from '../../../shared/components/service-unavailable/service-unavailable.component';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
@@ -31,10 +31,11 @@ import {
     })
   ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   loginForm: FormGroup;
   errorMessage = '';
@@ -45,6 +46,14 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['error'] === 'authentication_failed') {
+        this.errorMessage = 'Falha na autenticação com Google. Tente novamente.';
+      }
     });
   }
 
@@ -77,6 +86,10 @@ export class LoginComponent {
   retryLogin(): void {
     this.serviceUnavailable = false;
     this.errorMessage = '';
+  }
+
+  loginWithGoogle(): void {
+    this.authService.loginWithGoogle();
   }
 
   get email() {

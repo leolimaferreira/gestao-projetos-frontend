@@ -60,13 +60,13 @@ export class TaskFormComponent implements OnInit {
   isLoading = false;
   isEditMode = false;
   taskId: string | null = null;
-  currentTask: any = null; // Dados da tarefa sendo editada
+  currentTask: any = null;
 
   projects: Project[] = [];
   emailSuggestions: string[] = [];
   allEmails: string[] = [];
   showSuggestions = false;
-  showAssigneeEmailField = false; // Controla exibição do campo de email no modo edição
+  showAssigneeEmailField = false;
 
   statuses = [
     { value: 'TODO', label: 'A Fazer' },
@@ -135,28 +135,24 @@ export class TaskFormComponent implements OnInit {
     this.projectService.getByOwnerOrAssignee(userId).subscribe({
       next: (projects) => {
         this.projects = projects;
-        // Se há um projectId nos queryParams, preencher após carregar os projetos
         const projectId = this.route.snapshot.queryParamMap.get('projectId');
         if (projectId && !this.isEditMode) {
           this.preSelectProject(projectId);
         }
       },
       error: (error) => {
-        console.error('Erro ao carregar projetos:', error);
         this.errorMessage = 'Erro ao carregar projetos.';
       }
     });
   }
 
   private preSelectProject(projectId: string): void {
-    // Buscar o projeto pelo ID e preencher o nome no formulário
     const project = this.projects.find(p => p.id === projectId);
     if (project) {
       this.taskForm.patchValue({
         projectName: project.name
       });
     } else {
-      // Se não encontrou nos projetos carregados, buscar diretamente
       this.projectService.getById(projectId).subscribe({
         next: (project) => {
           this.taskForm.patchValue({
@@ -198,7 +194,6 @@ export class TaskFormComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar tarefa:', error);
         this.errorMessage = 'Erro ao carregar dados da tarefa.';
         this.isLoading = false;
       }
@@ -270,7 +265,6 @@ export class TaskFormComponent implements OnInit {
           this.navigateBack();
         },
         error: (error) => {
-          console.error('Erro ao salvar tarefa:', error);
           this.errorMessage = error.error?.message || 'Erro ao salvar tarefa.';
           this.isLoading = false;
         },
@@ -288,7 +282,6 @@ export class TaskFormComponent implements OnInit {
   }
 
   private navigateBack(): void {
-    // Primeiro, verificar se há um returnUrl nos queryParams
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     
     if (returnUrl) {
@@ -296,7 +289,6 @@ export class TaskFormComponent implements OnInit {
       return;
     }
     
-    // Fallback: usar o histórico de navegação
     const previousUrl = this.navigationService.getPreviousUrl();
     
     if (previousUrl) {

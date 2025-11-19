@@ -23,6 +23,10 @@ export const routes: Routes = [
     path: 'reset-password',
     loadComponent: () => import('./features/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
   },
+  {
+    path: 'auth/callback',
+    loadComponent: () => import('./features/auth/oauth-callback/oauth-callback.component').then(m => m.OauthCallbackComponent)
+  },
 
   {
     path: 'dashboard',

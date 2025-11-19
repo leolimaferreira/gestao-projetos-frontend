@@ -60,7 +60,7 @@ export class ProjectFormComponent implements OnInit {
   isLoading = false;
   isEditMode = false;
   projectId: string | null = null;
-  currentProject: any = null; // Dados do projeto sendo editado
+  currentProject: any = null;
 
   constructor() {
     this.projectForm = this.fb.group({
@@ -77,15 +77,12 @@ export class ProjectFormComponent implements OnInit {
     this.projectId = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.projectId;
 
-    // Se for modo de edição, carregar dados do projeto
     if (this.isEditMode && this.projectId) {
       this.loadProject(this.projectId);
     } else {
-      // Se for criação, definir validações obrigatórias
       this.setCreateValidators();
     }
 
-    // Carregar emails para autocomplete
     this.userService.getAllEmails().subscribe({
       next: (emails) => {
         this.allEmails = emails;
@@ -129,7 +126,6 @@ export class ProjectFormComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar projeto:', error);
         this.errorMessage = 'Erro ao carregar dados do projeto.';
         this.isLoading = false;
       }
@@ -155,7 +151,6 @@ export class ProjectFormComponent implements OnInit {
       let projectData: any;
 
       if (this.isEditMode) {
-        // No modo de edição, envia apenas campos não vazios
         projectData = {};
         const formValue = this.projectForm.value;
         
@@ -165,10 +160,9 @@ export class ProjectFormComponent implements OnInit {
         if (formValue.endDate) projectData.endDate = formValue.endDate;
         if (formValue.ownerEmail) projectData.ownerEmail = formValue.ownerEmail;
       } else {
-        // No modo de criação, envia todos os campos
         projectData = {
           ...this.projectForm.value,
-          ownerId: this.authService.getUserId() // Usa o ID do usuário logado
+          ownerId: this.authService.getUserId()
         };
       }
 
@@ -196,7 +190,6 @@ export class ProjectFormComponent implements OnInit {
   }
 
   private navigateBack(): void {
-    // Primeiro, verificar se há um returnUrl nos queryParams
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     
     if (returnUrl) {
@@ -204,24 +197,19 @@ export class ProjectFormComponent implements OnInit {
       return;
     }
     
-    // Fallback: usar o histórico de navegação
     const previousUrl = this.navigationService.getPreviousUrl();
     
     if (previousUrl) {
-      // Se veio de algum detalhe de projeto (contém /projects/{id} mas não é /new ou /edit)
       if (previousUrl.includes('/projects/') && !previousUrl.includes('/projects/new') && !previousUrl.includes('/projects/edit')) {
         this.router.navigateByUrl(previousUrl);
       }
-      // Se veio da lista de projetos
       else if (previousUrl === '/projects' || previousUrl.includes('/projects?')) {
         this.router.navigate(['/projects']);
       }
-      // Qualquer outro caso, voltar para lista de projetos
       else {
         this.router.navigate(['/projects']);
       }
     } else {
-      // Fallback padrão
       this.router.navigate(['/projects']);
     }
   }

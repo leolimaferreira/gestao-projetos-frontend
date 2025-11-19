@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <rect width="128" height="128" rx="24" fill="url(#gradient)"/>
+  
+  <!-- Folder/Project icon with modern design -->
+  <g filter="url(#shadow)">
+    <!-- Folder base -->
+    <path d="M30 45 L30 90 C30 95 32 97 37 97 L91 97 C96 97 98 95 98 90 L98 53 C98 48 96 46 91 46 L62 46 L56 38 C54 35 52 34 48 34 L37 34 C32 34 30 36 30 41 Z" 
+          fill="white" opacity="0.95"/>
+    
+    <!-- Folder tab -->
+    <path d="M30 41 C30 36 32 34 37 34 L48 34 C52 34 54 35 56 38 L62 46 L91 46 C96 46 98 48 98 53 L98 55 L30 55 Z" 
+          fill="white"/>
+    
+    <!-- Checkmark inside folder -->
+    <g opacity="0.9">
+      <path d="M52 68 L58 74 L76 58" 
+            stroke="#667eea" 
+            stroke-width="5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            fill="none"/>
+    </g>
+  </g>
+</svg>
